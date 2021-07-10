@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "antd": "^4.16.6",
+        "react-hook-form": "^7.10.1",
         "styled-components": "^5.3.0"
     }
 }

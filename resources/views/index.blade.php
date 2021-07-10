@@ -21,6 +21,8 @@
 
     <body>
         <div id="login-test"></div>
+        <div id="register-test"></div>
+        <div id="user-list-test"></div>
     </body>
 
     <script src="{{ asset('js/app.js') }}" defer></script>

@@ -13,11 +13,13 @@ const Form = styled.form`
   width: 100%;
 `;
 
-function LoginTest() {
+function RegisterTest() {
 
   const defaultValues = {
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    password_confirmation: ''
   };
 
   const { register, setValue, handleSubmit } = useForm({
@@ -25,23 +27,24 @@ function LoginTest() {
   });
 
   const onSubmit = (data) => {
-    event.preventDefault();
-    userApi.login(data);
-  };
-
-  const logout = () => {
-    userApi.logout();
-  };
-
-  const getCurrentUser = () => {
-    userApi.getCurrentUser();
+    userApi.register(data).then(response => {
+      for (const inputName in defaultValues) {
+        setValue(inputName, defaultValues[inputName]);
+      }
+    });
   };
 
   return (
     <Container>
-      <h3>Login</h3>
+      <h3>Register</h3>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
+
+        <div>
+          <label>Name</label>
+          <input type="text" {...register('name')}/>
+        </div>
+
         <div>
           <label>Email</label>
           <input type="email" {...register('email')}/>
@@ -53,17 +56,20 @@ function LoginTest() {
         </div>
 
         <div>
+          <label>Password Confirmation</label>
+          <input type="password" {...register('password_confirmation')}/>
+        </div>
+
+        <div>
           <button type="submit">Submit</button>
-          <button type="button" onClick={logout}>Log Out</button>
-          <button type="button" onClick={getCurrentUser}>Current User</button>
         </div>
       </Form>
     </Container>
   );
 }
 
-export default LoginTest;
+export default RegisterTest;
 
-if (document.getElementById('login-test')) {
-  ReactDOM.render(<LoginTest />, document.getElementById('login-test'));
+if (document.getElementById('register-test')) {
+  ReactDOM.render(<RegisterTest />, document.getElementById('register-test'));
 }
