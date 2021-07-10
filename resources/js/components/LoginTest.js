@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 function Example() {
   return (
     <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
+      <div className="row justify-content-center mt-4">
+        <div className="col-md-8 col-md-offset-2">
           <div className="card">
             <div className="card-header">Login Test</div>
 
