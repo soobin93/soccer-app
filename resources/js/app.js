@@ -12,6 +12,10 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
-require('./components/LoginTest');
+// <<<<<<< Updated upstream
+require('./components/App');
+// require('./components/LoginTest');
 
+// =======
+// require('./components/App');
+// >>>>>>> Stashed changes

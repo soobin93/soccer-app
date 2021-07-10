@@ -17,3 +17,7 @@ package-lock.json
 public/mix-manifest.json
 /.idea
 /.vscode
+
+# OS Generate Files
+.DS_Store
+.DS_Store?
