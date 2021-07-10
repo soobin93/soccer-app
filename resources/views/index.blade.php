@@ -19,7 +19,7 @@
         </style>
     </head>
 
-    <body >
+    <body>
         <div id="login-test"></div>
     </body>
 

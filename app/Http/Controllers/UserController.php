@@ -13,6 +13,6 @@ class UserController extends Controller
 
     public function login()
     {
-
+        dd('Login route reached!');
     }
 }

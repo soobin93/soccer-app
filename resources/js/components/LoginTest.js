@@ -1,24 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
 
-function Example() {
+import userApi from 'api/UserApi';
+
+const Container = styled.div`
+  padding: 40px 20px;
+`;
+
+const Form = styled.form`
+  width: 100%;
+`;
+
+function LoginTest() {
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    userApi.login();
+  };
+
   return (
-    <div className="container">
-      <div className="row justify-content-center mt-4">
-        <div className="col-md-8 col-md-offset-2">
-          <div className="card">
-            <div className="card-header">Login Test</div>
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        <input name="name" type="text" />
 
-            <div className="card-body">I'm an example component!</div>
-          </div>
-        </div>
-      </div>
-    </div>
+        <button type="submit">Submit</button>
+      </Form>
+    </Container>
   );
 }
 
-export default Example;
+export default LoginTest;
 
 if (document.getElementById('login-test')) {
-  ReactDOM.render(<Example />, document.getElementById('login-test'));
+  ReactDOM.render(<LoginTest />, document.getElementById('login-test'));
 }
