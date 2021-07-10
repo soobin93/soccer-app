@@ -19,7 +19,7 @@
     </head>
 
     <body >
-        <div id="example"></div>
+        <div id="login-test"></div>
     </body>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
