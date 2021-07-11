@@ -24,14 +24,14 @@ function Admin_User() {
           key: 'user_type'
         },
         {
-          title: 'Delete/Edit',
+          title: 'Delete\nEdit',
           dataIndex: 'delete_edit',
           key: 'delete_edit',
-          render: (record) =>(
-              <Space size="middle">
-                  <Button><DeleteOutlined /></Button>
-                  <Button><EditOutlined /></Button>
-              </Space>
+          render: () =>(
+            <Space>
+                <Button size="small"><DeleteOutlined /></Button>
+                <Button size="small"><EditOutlined /></Button>
+            </Space>
           ),
         },
       ];
@@ -46,13 +46,8 @@ function Admin_User() {
         });
     }
     
-    return ReactDOM.render(<Table columns={columns} dataSource={data} />, mountNode);
-    //return <Table dataSource={data} columns={columns} />;
+    return ReactDOM.render(<Table columns={columns} dataSource={data} size="small"/>, mountNode);
                 
 }
 
 export default Admin_User;
-
-if (document.getElementById('admin_table')) {
-    ReactDOM.render(<Admin_User />, document.getElementById('admin_table'));
-}
