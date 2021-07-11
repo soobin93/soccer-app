@@ -27,6 +27,7 @@ function RegisterTest() {
   });
 
   const onSubmit = (data) => {
+      console.log(data);
     userApi.register(data).then(response => {
       for (const inputName in defaultValues) {
         setValue(inputName, defaultValues[inputName]);
