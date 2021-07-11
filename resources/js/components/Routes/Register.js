@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Input, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Row, Col, Button } from 'antd';
 import styled from "styled-components";
+
+import userApi from '../../api/UserApi';
 
 const Title = styled.h1`
     text-align: center;
@@ -8,7 +10,7 @@ const Title = styled.h1`
 `
 
 const StyledButton = styled(Button)`
-  float: right;
+  width: 100%;
 `
 
 const tailFormItemLayout = {
@@ -46,8 +48,8 @@ const formItemLayout = {
 const Register = () => {
     const [form] = Form.useForm();
 
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+    const onFinish = (data) => {
+        userApi.register(data);
     };
 
     return(
@@ -92,7 +94,7 @@ const Register = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="confirm"
+                        name="password_confirmation"
                         label="Confirm Password"
                         dependencies={['password']}
                         hasFeedback
@@ -116,37 +118,13 @@ const Register = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="confirm"
-                        label="Confirm Password"
-                        dependencies={['password']}
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please confirm your password!',
-                            },
-                            ({ getFieldValue }) => ({
-                                validator(_, value) {
-                                    if (!value || getFieldValue('password') === value) {
-                                        return Promise.resolve();
-                                    }
-
-                                    return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                                },
-                            }),
-                        ]}
-                    >
-                        <Input.Password />
-                    </Form.Item>
-
-                    <Form.Item
-                        name="nickname"
-                        label="Nickname"
+                        name="name"
+                        label="Name"
                         tooltip="What do you want others to call you?"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your nickname!',
+                                message: 'Please input your name!',
                                 whitespace: true,
                             },
                         ]}
@@ -169,6 +147,7 @@ const Register = () => {
 }
 
 export default Register;
+
 
 
 

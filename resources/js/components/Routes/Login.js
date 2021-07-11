@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {withRouter, NavLink} from "react-router-dom";
+
+import userApi from '../../api/UserApi';
 
 const Title = styled.h1`
   text-align: center;
@@ -22,8 +24,18 @@ const SLink = styled(NavLink)`
 
 const LoginPage = () => {
 
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+    const onFinish = (data) => {
+        event.preventDefault();
+        console.log(data);
+        userApi.login(data);
+
+        try{
+            userApi.getCurrentUser();
+        }
+        catch (e){
+            console.log(e);
+        }
+
     };
 
     return (
@@ -39,15 +51,19 @@ const LoginPage = () => {
                     onFinish={onFinish}
                 >
                     <Form.Item
-                        name="username"
+                        name="email"
                         rules={[
                             {
+                                type: 'email',
+                                message: 'The input is not valid E-mail!',
+                            },
+                            {
                                 required: true,
-                                message: 'Please input your Username!',
+                                message: 'Please input your E-mail!',
                             },
                         ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -65,21 +81,17 @@ const LoginPage = () => {
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
-
-                        <ForgotPassword className="login-form-forgot" href="">
-                            Forgot password
-                        </ForgotPassword>
-                    </Form.Item>
-
-                    <Form.Item>
                         <StyledButton type="primary" htmlType="submit" className="login-form-button">
                             Log in
                         </StyledButton>
-                        Or <SLink to="/register">register now!</SLink>
                     </Form.Item>
+                    <Form.Item>
+                        <ForgotPassword className="login-form-forgot" href="">
+                            Forgot password
+                        </ForgotPassword>
+                        <SLink to="/register">Register</SLink>
+                    </Form.Item>
+
                 </Form>
             </Col>
         </Row>
