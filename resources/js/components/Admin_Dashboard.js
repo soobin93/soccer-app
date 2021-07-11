@@ -60,7 +60,7 @@ function Admin_User() {
         data.push({
             key: i,
             name: `User ${i}`,
-            email: `user${i}`+'@hotmail.com',
+            email: `user${i}`+'@google.com.au',
             user_type: `Admin or User`,
         });
     }
