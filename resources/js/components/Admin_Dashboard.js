@@ -1,26 +1,11 @@
 import { Table, Space, Button} from 'antd';
+import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import 'antd/dist/antd.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Fab from '@material-ui/core/Fab';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import { makeStyles } from '@material-ui/core/styles';
 
-
-const useStyles = makeStyles((theme) => ({
-    margin: {
-      margin: theme.spacing(1),
-    },
-    extendedIcon: {
-      marginRight: theme.spacing(1),
-    },
-}));
 
 function Admin_User() {
-
-    const classes = useStyles();
 
     const columns = [
         {
@@ -44,12 +29,8 @@ function Admin_User() {
           key: 'delete_edit',
           render: (record) =>(
               <Space size="middle">
-                  <IconButton aria-label="delete" className={classes.margin}>
-                      <DeleteIcon />
-                  </IconButton>
-                  <Fab size="small" aria-label="edit">
-                      <EditIcon />
-                  </Fab>
+                  <Button><DeleteOutlined /></Button>
+                  <Button><EditOutlined /></Button>
               </Space>
           ),
         },
