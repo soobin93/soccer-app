@@ -152,7 +152,6 @@ const Register = () => {
                                 Register
                             </StyledButton>
                         </Form.Item>
-
                     </Form>
                 </Card>
             </Col>

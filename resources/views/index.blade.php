@@ -23,7 +23,9 @@
         <div id="login-test"></div>
         <div id="register-test"></div>
         <div id="user-list-test"></div>
+        <div id="admin_table" style="padding: 24px"></div>
+        
     </body>
-
+    <script>var mountNode = document.getElementById('admin_table');</script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 </html>
