@@ -2,14 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import LoginPage from '../Routes/Login';
 import Register from '../Routes/Register';
-import AdminEdit from '../Routes/AdminEdit';
+import AdminEdit from '../Routes/admin/AdminEdit';
 
 export default () => {
     return(
         <Router>
             <Route path="/" exact component={LoginPage} />
             <Route path="/register" exact component={Register} />
-            <Route path="/AdminEdit" exact component={AdminEdit} />
+            <Route path="/admin/edit" exact component={AdminEdit} />
         </Router>
     )
 }
