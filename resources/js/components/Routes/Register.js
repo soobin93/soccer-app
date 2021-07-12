@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
-import { Form, Input, Row, Col, Button, Card } from 'antd';
+import { Form, Input, Row, Col, Button, Card, Select } from 'antd';
 import styled from "styled-components";
 
 import userApi from '../../api/UserApi';
+
+const { Option } = Select;
+
+const userType = [
+    {
+        value: 'user',
+        label: 'User'
+    },
+    {
+        value: 'admin',
+        label: 'Admin',
+    },
+];
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -75,6 +88,37 @@ const Register = () => {
                         </Form.Item>
 
                         <Form.Item
+                            name="name"
+                            label="Name"
+                            tooltip="What do you want others to call you?"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your name!',
+                                    whitespace: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="userType"
+                            label="User Type"
+                            rules={[
+                                { required: true, message: 'Please select your user type!' },
+                            ]}
+                        >
+                            <Select
+                                placeholder="Select user type"
+                                allowClear
+                            >
+                                <Option value="user">User</Option>
+                                <Option value="admin">Admin</Option>
+                            </Select>
+                        </Form.Item>
+
+                        <Form.Item
                             name="password"
                             label="Password"
                             rules={[
@@ -112,20 +156,7 @@ const Register = () => {
                             <Input.Password />
                         </Form.Item>
 
-                        <Form.Item
-                            name="name"
-                            label="Name"
-                            tooltip="What do you want others to call you?"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your name!',
-                                    whitespace: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
+
 
                         <Form.Item {...tailFormItemLayout}>
                             <StyledButton type="primary" htmlType="submit">
