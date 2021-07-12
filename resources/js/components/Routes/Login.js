@@ -91,7 +91,10 @@ const LoginPage = () => {
                         </ForgotPassword>
                         <SLink to="/register">Register</SLink>
                     </Form.Item>
-                    <SLink to="/admin_dashboard">Admin_Dashboard</SLink>
+                    <Form.Item>
+                        <SLink to="/admin_dashboard">Admin_Dashboard</SLink>
+                    </Form.Item>
+                    
                 </Form>
             </Col>
         </Row>

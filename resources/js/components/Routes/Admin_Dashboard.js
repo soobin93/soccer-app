@@ -1,9 +1,8 @@
-import { Table, Space, Button} from 'antd';
+import { Table, Space, Button, Row, Col} from 'antd';
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import 'antd/dist/antd.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 
 function Admin_User() {
 
@@ -46,7 +45,13 @@ function Admin_User() {
         });
     }
     
-    return ReactDOM.render(<Table columns={columns} dataSource={data} size="small"/>, mountNode);
+    return (
+      <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
+            <Col span={18}>
+                <h1>Admin Page</h1>
+                <Table columns={columns} dataSource={data} size="small"/>
+            </Col>
+      </Row>);
                 
 }
 
