@@ -4,7 +4,7 @@ import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {withRouter, NavLink} from "react-router-dom";
 
-import userApi from '../../api/UserApi';
+import userApi from '../api/UserApi';
 
 const Title = styled.h1`
   text-align: center;

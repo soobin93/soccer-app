@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Row, Col, Button, Card } from 'antd';
 import styled from "styled-components";
 
-import userApi from '../../api/UserApi';
+import userApi from '../api/UserApi';
 
 const StyledButton = styled(Button)`
   width: 100%;

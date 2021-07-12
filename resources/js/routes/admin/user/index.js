@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function Admin_User() {
+function AdminUser() {
 
     const columns = [
         {
@@ -55,4 +55,4 @@ function Admin_User() {
                 
 }
 
-export default Admin_User;
+export default AdminUser;

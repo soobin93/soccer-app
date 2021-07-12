@@ -1,11 +1,8 @@
 const mix = require('laravel-mix');
-const path = require('path');
+const config = require('./webpack.config');
 
 // Config
-mix.alias({
-  components: path.join(__dirname, 'resources/js/components'),
-  api: path.join(__dirname, 'resources/js/api'),
-});
+mix.webpackConfig(config);
 
 // Mapping
 mix.js('resources/js/app.js', 'public/js')
