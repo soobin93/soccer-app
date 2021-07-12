@@ -4,23 +4,12 @@ import styled from "styled-components";
 
 import userApi from '../../api/UserApi';
 
-const { Option } = Select;
 
-const userType = [
-    {
-        value: 'user',
-        label: 'User'
-    },
-    {
-        value: 'admin',
-        label: 'Admin',
-    },
-];
+const { Option } = Select;
 
 const StyledButton = styled(Button)`
   width: 100%;
 `
-
 const tailFormItemLayout = {
     wrapperCol: {
         xs: {

@@ -2,9 +2,17 @@ import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import {withRouter, NavLink} from "react-router-dom";
+import {withRouter, NavLink, useHistory} from "react-router-dom";
+import {useUser} from "../Contexts/UserContext";
 
 import userApi from '../../api/UserApi';
+
+const DummyData = {
+    email: "john@gmail.com",
+    password: "1234",
+    userType: "admin",
+    name:"John"
+}
 
 const Title = styled.h1`
   text-align: center;
@@ -24,17 +32,24 @@ const SLink = styled(NavLink)`
 
 const LoginPage = () => {
 
+    const [user, setUser] = useUser();
+    const history = useHistory();
+
     const onFinish = (data) => {
         event.preventDefault();
-        console.log(data);
-        userApi.login(data);
+        if(DummyData.email === data.email && DummyData.password === data.password){
+            setUser({...DummyData});
+        }
 
-        try{
-            userApi.getCurrentUser();
-        }
-        catch (e){
-            console.log(e);
-        }
+        history.push("/register");
+        // userApi.login(data);
+
+        // try{
+        //     userApi.getCurrentUser();
+        // }
+        // catch (e){
+        //     console.log(e);
+        // }
 
     };
 
