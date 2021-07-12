@@ -92,7 +92,7 @@ const LoginPage = () => {
                         <SLink to="/register">Register</SLink>
                     </Form.Item>
                     <Form.Item>
-                        <SLink to="/admin_dashboard">Admin_Dashboard</SLink>
+                        <SLink to="/AdminDashboard">Admin Dashboard</SLink>
                     </Form.Item>
                     
                 </Form>
