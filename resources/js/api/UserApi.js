@@ -2,14 +2,12 @@ import axios from 'axios';
 import api from 'api';
 
 export default {
-  login: (credentials) => {
+  login: async (credentials) => {
     const sanctumUrl = `${process.env.MIX_APP_URL}/sanctum/csrf-cookie`;
-    return axios.get(sanctumUrl).then(response => {
-        api.post('login', credentials).then(response => {
-          api.get('user');
-        });
-      }
-    );
+
+    await axios.get(sanctumUrl);
+
+    return api.post('login', credentials)
   },
 
   logout: () => api.post('logout'),

@@ -19,9 +19,8 @@ class UserController extends Controller
     public function index()
     {
         return response()->json([
-            'status' => Response::HTTP_OK,
             'users' => User::all()
-        ]);
+        ], Response::HTTP_OK);
     }
 
     public function register(Request $request)
@@ -39,9 +38,8 @@ class UserController extends Controller
         ]);
 
         return response()->json([
-            'status' => Response::HTTP_OK,
             'message' => 'The user has been registered successfully!'
-        ]);
+        ], Response::HTTP_OK);
     }
 
     public function login(Request $request)
@@ -55,14 +53,16 @@ class UserController extends Controller
             $request->session()->regenerate();
 
             return response()->json([
-                'status' => Response::HTTP_OK,
+                'user' => Auth::user(),
                 'message' => 'You have logged in successfully!'
-            ]);
+            ], Response::HTTP_OK);
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        return response()->json([
+            'errors' => [
+                'email' => 'Given credentials do not match with our records'
+            ]
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function logout(Request $request)
@@ -74,13 +74,14 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return response()->json([
-            'status' => Response::HTTP_OK,
             'message' => 'You have logged out successfully!'
-        ]);
+        ], Response::HTTP_OK);
     }
 
     public function getCurrentUser(Request $request)
     {
-        dd(Auth::user()->toArray());
+        return response()->json([
+            'user' => Auth::user()
+        ], Response::HTTP_OK);
     }
 }

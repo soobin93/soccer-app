@@ -2,31 +2,16 @@ import styled from "styled-components";
 import React from "react";
 import {Form, Input, Button, Row, Col} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-import {NavLink, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {useUser} from 'components/contexts/UserContext';
 
 import UserApi from 'api/UserApi';
-
-const DummyData = {
-  email: "john@gmail.com",
-  password: "1234",
-  userType: "admin",
-  name: "John"
-}
 
 const Title = styled.h1`
   text-align: center;
   margin-bottom: 10%;
 `
 const StyledButton = styled(Button)`
-  width: 100%;
-`;
-
-const ForgotPassword = styled.a`
-  float: right;
-`;
-
-const SLink = styled(NavLink)`
   width: 100%;
 `;
 
@@ -37,21 +22,18 @@ const LoginPage = () => {
 
   const onFinish = (data) => {
     event.preventDefault();
-    if (DummyData.email === data.email && DummyData.password === data.password) {
-      setUser({...DummyData});
-    }
 
-    history.push("/register");
-    // UserApi.login(data);
-
-    // try{
-    //     UserApi.getCurrentUser();
-    // }
-    // catch (e){
-    //     console.log(e);
-    // }
-
+    UserApi.login(data).then(function (response) {
+      setUser(response.data.user);
+      history.push('/admin/user')
+    });
   };
+
+  const logOut = () => {
+    UserApi.logout().then(function (response) {
+      location.reload();
+    });
+  }
 
   return (
     <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
@@ -101,25 +83,14 @@ const LoginPage = () => {
             </StyledButton>
           </Form.Item>
           <Form.Item>
-            <ForgotPassword className="login-form-forgot" href="">
-              Forgot password
-            </ForgotPassword>
-            <SLink to="/register">Register</SLink>
+            <StyledButton type="danger" onClick={logOut}>
+              Log Out
+            </StyledButton>
           </Form.Item>
-          <Form.Item>
-            <SLink to="/admin/edit">Admin Edit</SLink>
-          </Form.Item>
-          <Form.Item>
-            <SLink to="/admin/dashboard">Admin Dashboard</SLink>
-          </Form.Item>
-
         </Form>
       </Col>
     </Row>
-
-
   );
-
 }
 
 export default LoginPage;

@@ -9,7 +9,7 @@ import AdminUser from 'routes/admin/user';
 import AdminUserAdd from 'routes/admin/user/add';
 import AdminUserView from 'routes/admin/user/view';
 
-import Test from 'routes/test';
+import Unauthorized from 'routes/error/unauthorized';
 
 export default () => {
 
@@ -18,14 +18,14 @@ export default () => {
       <Route path="/" exact component={LoginPage}/>
 
       {/* Error Pages */}
-      <Route path="/unauthorized" exact component={Test}/>
+      <Route path="/error/unauthorized" exact component={Unauthorized}/>
 
       {/* Member Pages */}
 
       {/* Admin Pages */}
-      <AdminRoute path="/admin/user" exact component={AdminUser}/>
-      <AdminRoute path="/admin/user/add" exact component={AdminUserAdd}/>
-      <AdminRoute path="/admin/user/:id" exact component={AdminUserView}/>
+      <UserRoute path="/admin/user" exact component={AdminUser}/>
+      <UserRoute path="/admin/user/add" exact component={AdminUserAdd}/>
+      <UserRoute path="/admin/user/:id" exact component={AdminUserView}/>
 
     </Router>
   )
