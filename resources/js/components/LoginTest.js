@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import userApi from 'api/UserApi';
+import UserApi from 'api/UserApi';
 
 const Container = styled.div`
   padding: 40px 20px;
@@ -26,15 +26,15 @@ function LoginTest() {
 
   const onSubmit = (data) => {
     event.preventDefault();
-    userApi.login(data);
+    UserApi.login(data);
   };
 
   const logout = () => {
-    userApi.logout();
+    UserApi.logout();
   };
 
   const getCurrentUser = () => {
-    userApi.getCurrentUser();
+    UserApi.getCurrentUser();
   };
 
   return (

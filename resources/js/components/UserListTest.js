@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
-import userApi from 'api/UserApi';
+import UserApi from 'api/UserApi';
 
 const Container = styled.div`
   padding: 40px 20px;
@@ -11,7 +11,7 @@ const Container = styled.div`
 function UserListTest() {
 
   const getUsers = () => {
-    userApi.getUsers();
+    UserApi.getUsers();
   };
 
   return (

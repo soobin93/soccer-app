@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import userApi from 'api/UserApi';
+import UserApi from 'api/UserApi';
 
 const Container = styled.div`
   padding: 40px 20px;
@@ -28,7 +28,7 @@ function RegisterTest() {
 
   const onSubmit = (data) => {
       console.log(data);
-    userApi.register(data).then(response => {
+    UserApi.register(data).then(response => {
       for (const inputName in defaultValues) {
         setValue(inputName, defaultValues[inputName]);
       }

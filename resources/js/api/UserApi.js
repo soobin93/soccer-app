@@ -19,4 +19,6 @@ export default {
   register: (data) => api.post('register', data),
 
   getUsers: () => api.get('user'),
+
+  userUpdateAdmin: (data) => api.post('update', data),
 };

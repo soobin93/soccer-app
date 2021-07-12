@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Form, Input, Row, Col, Button, Card } from 'antd';
+import { Form, Input, Row, Col, Button, Card, Tooltip } from 'antd';
 import styled from "styled-components";
 
-import userApi from '../api/UserApi';
+import UserApi from 'api/UserApi';
+import { ToolFilled } from '@ant-design/icons';
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -40,23 +41,27 @@ const formItemLayout = {
     },
 };
 
-const Register = () => {
+const Edit = () => {
     const [form] = Form.useForm();
 
     const onFinish = (data) => {
-        userApi.register(data);
+        UserApi.updateUser(data);
     };
 
+    const warningTooltip = <span>Email is not allowed to change</span>
+
+    var titleName = 'User1'
     return(
         <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
             <Col span={20}>
-                <Card title="Create new account">
+                <Card title={'Updating '+ titleName}>
                     <Form
                         {...formItemLayout}
                         form={form}
-                        name="register"
+                        name="update"
                         onFinish={onFinish}
                     >
+                        
                         <Form.Item
                             name="email"
                             label="E-mail"
@@ -67,69 +72,32 @@ const Register = () => {
                                 },
                                 {
                                     required: true,
-                                    message: 'Please input your E-mail!',
+                                    message: 'Please input E-mail!',
                                 },
                             ]}
+                            initialValue="user1@hotmail.com"
                         >
-                            <Input />
+                            <Input disabled/>
                         </Form.Item>
-
-                        <Form.Item
-                            name="password"
-                            label="Password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your password!',
-                                },
-                            ]}
-                            hasFeedback
-                        >
-                            <Input.Password />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="password_confirmation"
-                            label="Confirm Password"
-                            dependencies={['password']}
-                            hasFeedback
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please confirm your password!',
-                                },
-                                ({ getFieldValue }) => ({
-                                    validator(_, value) {
-                                        if (!value || getFieldValue('password') === value) {
-                                            return Promise.resolve();
-                                        }
-
-                                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                                    },
-                                }),
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
-
+                        
                         <Form.Item
                             name="name"
                             label="Name"
-                            tooltip="What do you want others to call you?"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your name!',
+                                    message: 'Please input name!',
                                     whitespace: true,
                                 },
                             ]}
+                            initialValue="user1"
                         >
                             <Input />
                         </Form.Item>
 
                         <Form.Item {...tailFormItemLayout}>
                             <StyledButton type="primary" htmlType="submit">
-                                Register
+                                Update
                             </StyledButton>
                         </Form.Item>
                     </Form>
@@ -141,7 +109,7 @@ const Register = () => {
     )
 }
 
-export default Register;
+export default Edit;
 
 
 
