@@ -19,4 +19,4 @@ public/mix-manifest.json
 /.vscode
 
 # OS Generate Files
-.DS_Store
+*.DS_Store
