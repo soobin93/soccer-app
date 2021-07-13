@@ -23,9 +23,9 @@ export default () => {
       {/* Member Pages */}
 
       {/* Admin Pages */}
-      <UserRoute path="/admin/user" exact component={AdminUser}/>
-      <UserRoute path="/admin/user/add" exact component={AdminUserAdd}/>
-      <UserRoute path="/admin/user/:id" exact component={AdminUserView}/>
+      <Route path="/admin/user" exact component={AdminUser}/>
+      <Route path="/admin/user/add" exact component={AdminUserAdd}/>
+      <Route path="/admin/user/:id" exact component={AdminUserView}/>
 
     </Router>
   )
