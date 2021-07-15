@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Row, Col, Button, Card, Select } from 'antd';
+import { Form, Input, Row, Col, Button, Card, Select, message } from 'antd';
 import styled from "styled-components";
 
 import UserApi from 'api/UserApi';
@@ -49,7 +49,26 @@ const Add = () => {
     };
 
     const onFinish = (data) => {
-        UserApi.register(data);
+        UserApi.register(data).then(function (response) {
+            message.success('A user has been successfully added!')
+            form.resetFields();
+        }).catch(function (error) {
+            if (error.response.data.hasOwnProperty('errors')) {
+                const errors = error.response.data.errors;
+                let fields = [];
+                for (const inputKey in errors) {
+                    if (errors.hasOwnProperty(inputKey)) {
+                        fields.push({
+                            name: inputKey,
+                            errors: [errors[inputKey]]
+                        });
+                    }
+                }
+
+                form.setFields(fields);
+                message.error('Error: please check your inputs and submit again');
+            }
+        });
     };
 
     return(
