@@ -1,8 +1,6 @@
 import { Table, Space, Button, Row, Col} from 'antd';
-import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
-import 'antd/dist/antd.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import React, { useState, useEffect } from 'react';
 
 function AdminUser() {
 

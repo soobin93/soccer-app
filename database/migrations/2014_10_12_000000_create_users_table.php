@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 
@@ -20,15 +21,18 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('admin')->default(false);
             $table->boolean('approved')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
 
+        // Add Root User
         User::create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
-            'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
+            'password' => Hash::make('admin123'),
+            'admin' => true,
             'approved' => true
         ]);
     }

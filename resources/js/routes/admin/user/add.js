@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 import UserApi from 'api/UserApi';
 
-
 const { Option } = Select;
 
 const StyledButton = styled(Button)`
@@ -45,6 +44,10 @@ const formItemLayout = {
 const Add = () => {
     const [form] = Form.useForm();
 
+    const initialValues = {
+        admin: false
+    };
+
     const onFinish = (data) => {
         UserApi.register(data);
     };
@@ -52,11 +55,12 @@ const Add = () => {
     return(
         <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
             <Col span={20}>
-                <Card title="Create new account">
+                <Card title="Add New User">
                     <Form
                         {...formItemLayout}
                         form={form}
                         name="register"
+                        initialValues={initialValues}
                         onFinish={onFinish}
                     >
                         <Form.Item
@@ -92,7 +96,7 @@ const Add = () => {
                         </Form.Item>
 
                         <Form.Item
-                            name="userType"
+                            name="admin"
                             label="User Type"
                             rules={[
                                 { required: true, message: 'Please select your user type!' },
@@ -102,8 +106,8 @@ const Add = () => {
                                 placeholder="Select user type"
                                 allowClear
                             >
-                                <Option value="user">User</Option>
-                                <Option value="admin">Admin</Option>
+                                <Option value={false}>Member</Option>
+                                <Option value={true}>Admin</Option>
                             </Select>
                         </Form.Item>
 
@@ -145,8 +149,6 @@ const Add = () => {
                             <Input.Password />
                         </Form.Item>
 
-
-
                         <Form.Item {...tailFormItemLayout}>
                             <StyledButton type="primary" htmlType="submit">
                                 Register
@@ -156,8 +158,6 @@ const Add = () => {
                 </Card>
             </Col>
         </Row>
-
-
     )
 }
 
