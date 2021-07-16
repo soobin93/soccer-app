@@ -11,10 +11,13 @@ import AdminUserView from 'routes/admin/user/view';
 
 import Unauthorized from 'routes/error/unauthorized';
 
+import NavBar from "components/NavBar";
+
 export default () => {
 
   return (
     <Router>
+        <NavBar/>
       <Switch>
         <Route path="/" exact component={LoginPage}/>
 
