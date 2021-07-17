@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import {withRouter,NavLink} from "react-router-dom"
 
@@ -8,7 +8,7 @@ const Container = styled.div`
     box-sizing: border-box;
     font-size: 62.5%;
     font-family: 'Roboto', sans-serif;
-    border-bottom: 1px solid #E2E8F0;
+    // border-bottom: 1px solid #E2E8F0;
 
 `;
 
@@ -26,22 +26,19 @@ const Bar = styled.span`
 
 const Hamburger = styled.div`
     display: none;
+    flex-direction: column;
+    cursor: pointer;
+
+    span {
+        height: 2px;
+        width: 25px;
+        background: #101010;
+        margin-bottom: 4px;
+        border-radius: 5px;
+    }
 
     @media (max-width: 768px){
-        display: block;
-        cursor: pointer;
-
-        &:active ${Bar} {
-            &:nth-child(2){
-                opacity: 0;
-            }
-            &:nth-child(1){
-                transform: translateY(8px) rotate(45deg);
-            }
-            &:nth-child(3){
-                transform: translateY(-8px) rotate(-45deg);
-            }
-        }
+        display: flex;
     }
 `;
 
@@ -50,81 +47,108 @@ const Nav = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
+    flex-wrap: wrap;
+    padding: 0 2rem;
 `;
 
 const NavMenu = styled.ul`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    border-bottom: 1px solid #E2E8F0;
 
     @media (max-width: 768px){
-        position: fixed;
-        left: -100%;
-        top: 5rem;
+        padding-left: 0;
+        overflow: hidden;
         flex-direction: column;
-        background-color: #fff;
         width: 100%;
-        border-radius: 10px;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow:
-            0 10px 27px rgba(0, 0, 0, 0.05);
+        max-height: ${({isOpen}) => (isOpen ? "300px" : "0")};
+        transition: max-height 0.3s ease-in;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
     }
 
-    &:active{
-        left: 0;
-    }
+       // @media (max-width: 768px){
+       //     padding-left: 0;
+       //     position: fixed;
+       //     left: ${({isOpen}) => (isOpen ? "0" : "-100%")};
+       //     top: 5rem;
+       //     flex-direction: column;
+       //     background-color: #fff;
+       //     width: 100%;
+       //     border-radius: 10px;
+       //     text-align: center;
+       //     transition: 0.3s;
+       //     box-shadow:
+       //         0 10px 27px rgba(0, 0, 0, 0.05);
+       // }
+
 `;
-const NavItem = styled.li`
+const MenuItem = styled.li`
     margin-top: 0.5rem;
     margin-left: 5rem;
     list-style: none;
 
     @media (max-width: 768px){
-       margin: 2.5rem 0;
+       margin: 1rem 0;
+       text-align: center;
     }
 `;
 
-const SLink = styled(NavLink)`
-    font-size: 1.2rem;
-    font-weight: 400;
+const MenuLink = styled(NavLink)`
+    padding: 1rem 2rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
     color: #475569;
+    transition: all 0.3s ease-in;
+    font-size: 1.2rem;
+    font-weight: 300;
 
     &:hover{
       color: #482ff7;
     }
+
+    @media(max-width: 768px){
+        &:active ${NavMenu}{
+            max-height: 0;
+        }
+    }
 `;
 
 const TitleLink = styled(NavLink)`
-    font-size: 1.5rem;
-    font-weight: 500;
+    padding: 1rem 0;
+    text-decoration: none;
+    font-size: 1.7rem;
+    font-weight: 800;
     color: #482ff7;
 `;
 
 
 const NavBar = () => {
+    const [isOpen, setIsOpen] = useState(false);
 
     return(
         <Container>
             <Nav>
                 <TitleLink exact to="/">SoccerApp.</TitleLink>
-                <NavMenu>
-                    <NavItem>
-                        <SLink exact to="/">Home</SLink>
-                    </NavItem>
-                    <NavItem>
-                        <SLink to="/">Add User</SLink>
-                    </NavItem>
-                    <NavItem>
-                        <SLink to="/">Dashboard</SLink>
-                    </NavItem>
-                </NavMenu>
-                <Hamburger>
-                    <Bar/>
-                    <Bar/>
-                    <Bar/>
+                <Hamburger onClick={()=>setIsOpen(!isOpen)}>
+                    <span/>
+                    <span/>
+                    <span/>
                 </Hamburger>
+                <NavMenu isOpen={isOpen}>
+                    <MenuItem>
+                        <MenuLink exact to="/" onClick={()=>setIsOpen(!isOpen)}>Home</MenuLink>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuLink to="/admin/user/add" onClick={()=>setIsOpen(!isOpen)}>Add User</MenuLink>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuLink to="/" onClick={()=>setIsOpen(!isOpen)}>Dashboard</MenuLink>
+                    </MenuItem>
+                </NavMenu>
+
             </Nav>
         </Container>
     )
