@@ -1,6 +1,7 @@
 import { Table, Space, Button, Row, Col} from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import UserApi from 'api/UserApi';
 
@@ -26,10 +27,17 @@ function AdminUser() {
           title: 'Control',
           dataIndex: 'control',
           key: 'control',
-          render: () =>(
+          render: (text, row, index) => (
             <Space>
-                <Button size="small"><DeleteOutlined /></Button>
-                <Button size="small"><EditOutlined /></Button>
+              <Button size="small">
+                <DeleteOutlined/>
+              </Button>
+
+              <Link to={`/admin/user/${row.key}`}>
+                <Button size="small">
+                  <EditOutlined/>
+                </Button>
+              </Link>
             </Space>
           ),
         },
@@ -56,7 +64,7 @@ function AdminUser() {
           setUserData(data);
         }
       }).catch(function (error) {
-
+        // @TODO: Print error message here
       });
     }, []);
     

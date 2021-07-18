@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Form, Input, Row, Col, Button, Card, Tooltip } from 'antd';
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import {useHistory, useParams} from 'react-router-dom';
+import {Form, Input, Row, Col, Button, Card, Select, message} from 'antd';
+import styled from 'styled-components';
 
 import UserApi from 'api/UserApi';
-import { ToolFilled } from '@ant-design/icons';
+
+const { Option } = Select;
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -42,57 +44,123 @@ const formItemLayout = {
 };
 
 const Edit = () => {
+    const { id } = useParams();
     const [form] = Form.useForm();
+    const [userData, setUserData] = useState(null);
+    const history = useHistory();
 
     const onFinish = (data) => {
-        UserApi.updateUser(data);
+        UserApi.updateUser(id, data).then(function (response) {
+            message.success(response.data.message);
+            history.push('/admin/user');
+        }).catch(function (error) {
+            if (error.response.data.hasOwnProperty('errors')) {
+                const errors = error.response.data.errors;
+                let fields = [];
+                for (const inputKey in errors) {
+                    if (errors.hasOwnProperty(inputKey)) {
+                        fields.push({
+                            name: inputKey,
+                            errors: [errors[inputKey]]
+                        });
+                    }
+                }
+
+                form.setFields(fields);
+                message.error('Error: please check your inputs and submit again');
+            }
+        });
     };
 
-    const warningTooltip = <span>Email is not allowed to change</span>
+    // When the page is loaded
+    useEffect(() => {
+        UserApi.getUser(id).then(function (response) {
+            if (response.data.hasOwnProperty('user')) {
+                const userData = response.data.user;
+                setUserData({
+                    email: userData.email,
+                    name: userData.name,
+                    admin: userData.admin
+                });
+            }
+        }).catch(function (error) {
+            // @TODO: Print error message here
+        });
+    }, []);
 
-    var titleName = 'User1'
-    return(
+    return !userData
+      // Loading
+      // @TODO: Add a loader here
+      ? (
+        <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
+            <Col span={20} style={{ textAlign: 'center' }}>
+                <h2>Loading...</h2>
+            </Col>
+        </Row>
+      ) : (
         <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
             <Col span={20}>
-                <Card title={'Updating '+ titleName}>
+                <Card title="Update">
                     <Form
-                        {...formItemLayout}
-                        form={form}
-                        name="update"
-                        onFinish={onFinish}
+                      {...formItemLayout}
+                      form={form}
+                      name="update"
+                      onFinish={onFinish}
                     >
-                        
+
                         <Form.Item
-                            name="email"
-                            label="E-mail"
-                            rules={[
-                                {
-                                    type: 'email',
-                                    message: 'The input is not valid E-mail!',
-                                },
-                                {
-                                    required: true,
-                                    message: 'Please input E-mail!',
-                                },
-                            ]}
-                            initialValue="user1@hotmail.com"
+                          name="email"
+                          label="Email"
+                          initialValue={userData.email}
                         >
                             <Input disabled/>
                         </Form.Item>
-                        
+
                         <Form.Item
-                            name="name"
-                            label="Name"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input name!',
-                                    whitespace: true,
-                                },
-                            ]}
-                            initialValue="user1"
+                          name="name"
+                          label="Name"
+                          rules={[
+                              {
+                                  required: true,
+                                  message: 'Name input is required',
+                                  whitespace: true,
+                              },
+                          ]}
+                          initialValue={userData.name}
                         >
-                            <Input />
+                            <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                          name="admin"
+                          label="User Type"
+                          rules={[
+                              {required: true, message: 'User type input is required'},
+                          ]}
+                          initialValue={!!userData.admin}
+                        >
+                            <Select
+                              placeholder="Select user type"
+                              allowClear
+                            >
+                                <Option value={false}>Member</Option>
+                                <Option value={true}>Admin</Option>
+                            </Select>
+                        </Form.Item>
+
+                        <Form.Item
+                          name="password"
+                          label="Password"
+                        >
+                            <Input.Password/>
+                        </Form.Item>
+
+                        <Form.Item
+                          name="password_confirmation"
+                          label="Confirm Password"
+                          dependencies={['password']}
+                        >
+                            <Input.Password/>
                         </Form.Item>
 
                         <Form.Item {...tailFormItemLayout}>
@@ -104,9 +172,7 @@ const Edit = () => {
                 </Card>
             </Col>
         </Row>
-
-
-    )
+      );
 }
 
 export default Edit;

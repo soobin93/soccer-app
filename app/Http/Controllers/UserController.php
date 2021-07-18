@@ -23,7 +23,14 @@ class UserController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function register(Request $request)
+    public function view(User $user)
+    {
+        return response()->json([
+            'user' => $user
+        ], Response::HTTP_OK);
+    }
+
+    public function create(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -41,6 +48,25 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'The user has been registered successfully!'
+        ], Response::HTTP_OK);
+    }
+
+    public function update(User $user, Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'admin' => ['required', 'boolean'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed']
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'password' => Hash::make($request->password),
+            'admin' => $request->admin
+        ]);
+
+        return response()->json([
+            'message' => 'The user has been updated successfully!'
         ], Response::HTTP_OK);
     }
 

@@ -49,8 +49,8 @@ const Add = () => {
     };
 
     const onFinish = (data) => {
-        UserApi.register(data).then(function (response) {
-            message.success('A user has been successfully added!')
+        UserApi.createUser(data).then(function (response) {
+            message.success(response.data.message);
             form.resetFields();
         }).catch(function (error) {
             if (error.response.data.hasOwnProperty('errors')) {
@@ -87,13 +87,9 @@ const Add = () => {
                             label="E-mail"
                             rules={[
                                 {
-                                    type: 'email',
-                                    message: 'The input is not valid E-mail!',
-                                },
-                                {
                                     required: true,
-                                    message: 'Please input your E-mail!',
-                                },
+                                    message: 'Please type your E-mail',
+                                }
                             ]}
                         >
                             <Input />
@@ -106,7 +102,7 @@ const Add = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your name!',
+                                    message: 'Please type your name',
                                     whitespace: true,
                                 },
                             ]}
@@ -136,7 +132,7 @@ const Add = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your password!',
+                                    message: 'Please type your password!',
                                 },
                             ]}
                             hasFeedback

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import {Form, Input, Button, Row, Col} from 'antd';
+import {Form, Input, Button, Row, Col, message} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import {useHistory} from 'react-router-dom';
 import {useUser} from 'components/contexts/UserContext';
@@ -16,7 +16,7 @@ const StyledButton = styled(Button)`
 `;
 
 const LoginPage = () => {
-
+  const [form] = Form.useForm();
   const [user, setUser] = useUser();
   const history = useHistory();
 
@@ -25,7 +25,22 @@ const LoginPage = () => {
 
     UserApi.login(data).then(function (response) {
       setUser(response.data.user);
-      history.push('/admin/user')
+      history.push('/admin/user');
+    }).catch(function (error) {
+      if (error.response.data.hasOwnProperty('errors')) {
+        const errors = error.response.data.errors;
+        let fields = [];
+        for (const inputKey in errors) {
+          if (errors.hasOwnProperty(inputKey)) {
+            fields.push({
+              name: inputKey,
+              errors: [errors[inputKey]]
+            });
+          }
+        }
+
+        form.setFields(fields);
+      }
     });
   };
 
@@ -40,8 +55,7 @@ const LoginPage = () => {
       <Col span={18}>
         <Title>Welcome to Soccer App!</Title>
         <Form
-          name="normal_login"
-          className="login-form"
+          form={form}
           initialValues={{
             remember: true,
           }}
@@ -51,13 +65,9 @@ const LoginPage = () => {
             name="email"
             rules={[
               {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
                 required: true,
-                message: 'Please input your E-mail!',
-              },
+                message: 'Please type your email',
+              }
             ]}
           >
             <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="Email"/>
@@ -67,7 +77,7 @@ const LoginPage = () => {
             rules={[
               {
                 required: true,
-                message: 'Please input your Password!',
+                message: 'Please type your password',
               },
             ]}
           >
