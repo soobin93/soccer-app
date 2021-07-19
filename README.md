@@ -1,7 +1,6 @@
 # Soccer App
 
 ## Road Map
-___
 - [ ] User Authentication
 - [ ] User Manager
 - [ ] Attend / Not Attend Vote Page
@@ -11,7 +10,6 @@ ___
 - [ ] First Launching
 
 ## Installation
-___
 1. Install plugins (Both back-end and front-end)
 ```
 composer install && npm install
