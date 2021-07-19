@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import { NavLink, useHistory} from "react-router-dom"
+import {NavLink, useHistory} from "react-router-dom"
 import {useUser} from "components/contexts/UserContext";
 
 const Container = styled.div`
@@ -26,7 +26,7 @@ const Hamburger = styled.div`
         border-radius: 5px;
     }
 
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
         display: flex;
     }
 `;
@@ -45,7 +45,7 @@ const NavMenu = styled.ul`
     align-items: center;
     position: relative;
 
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
         padding-left: 0;
         overflow: hidden;
         flex-direction: column;
@@ -66,8 +66,8 @@ const MenuLink = styled(NavLink)`
     font-size: 1.2rem;
     font-weight: 300;
 
-    &:hover{
-      color: #482ff7;
+    &:hover {
+        color: #482ff7;
     }
 
 `;
@@ -77,12 +77,12 @@ const MenuItem = styled.li`
     margin-left: 5rem;
     list-style: none;
 
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
         margin: 1rem 0;
         text-align: center;
 
-        &:nth-child(4) ${MenuLink}{
-            color:red;
+        &:nth-child(4) ${MenuLink} {
+            color: red;
         }
     }
 
@@ -104,29 +104,29 @@ const NavBar = () => {
     const LogUser = () => {
         setIsOpen(!isOpen);
 
-        if(user){
+        if (user) {
             setUser(null);
         }
     }
 
-    return(
+    return (
         <Container>
             <Nav>
                 <TitleLink exact to="/">SoccerApp.</TitleLink>
-                <Hamburger onClick={()=>setIsOpen(!isOpen)}>
+                <Hamburger onClick={() => setIsOpen(!isOpen)}>
                     <span/>
                     <span/>
                     <span/>
                 </Hamburger>
                 <NavMenu isOpen={isOpen}>
                     <MenuItem>
-                        <MenuLink exact to="/" onClick={()=>setIsOpen(!isOpen)}>Home</MenuLink>
+                        <MenuLink exact to="/" onClick={() => setIsOpen(!isOpen)}>Home</MenuLink>
                     </MenuItem>
                     <MenuItem>
-                        <MenuLink to="/admin/user/add" onClick={()=>setIsOpen(!isOpen)}>Add User</MenuLink>
+                        <MenuLink to="/admin/user/add" onClick={() => setIsOpen(!isOpen)}>Add User</MenuLink>
                     </MenuItem>
                     <MenuItem>
-                        <MenuLink to="/" onClick={()=>setIsOpen(!isOpen)}>Dashboard</MenuLink>
+                        <MenuLink to="/" onClick={() => setIsOpen(!isOpen)}>Dashboard</MenuLink>
                     </MenuItem>
                     <MenuItem>
                         <MenuLink to="/" onClick={LogUser}>{user != null ? "Log Out" : "Log In"}</MenuLink>
@@ -139,4 +139,5 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
 
