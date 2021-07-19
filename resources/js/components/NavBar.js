@@ -1,26 +1,15 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {withRouter,NavLink} from "react-router-dom"
+import { NavLink, useHistory} from "react-router-dom"
+import {useUser} from "components/contexts/UserContext";
 
 const Container = styled.div`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-size: 62.5%;
+    font-size: 15%;
     font-family: 'Roboto', sans-serif;
-    // border-bottom: 1px solid #E2E8F0;
-
-`;
-
-const Bar = styled.span`
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    background-color: #101010;
-
+    border-bottom: 1px solid #E2E8F0;
 
 `;
 
@@ -42,7 +31,6 @@ const Hamburger = styled.div`
     }
 `;
 
-
 const Nav = styled.nav`
     display: flex;
     justify-content: space-between;
@@ -56,7 +44,6 @@ const NavMenu = styled.ul`
     justify-content: space-between;
     align-items: center;
     position: relative;
-    border-bottom: 1px solid #E2E8F0;
 
     @media (max-width: 768px){
         padding-left: 0;
@@ -65,34 +52,8 @@ const NavMenu = styled.ul`
         width: 100%;
         max-height: ${({isOpen}) => (isOpen ? "300px" : "0")};
         transition: max-height 0.3s ease-in;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
     }
 
-       // @media (max-width: 768px){
-       //     padding-left: 0;
-       //     position: fixed;
-       //     left: ${({isOpen}) => (isOpen ? "0" : "-100%")};
-       //     top: 5rem;
-       //     flex-direction: column;
-       //     background-color: #fff;
-       //     width: 100%;
-       //     border-radius: 10px;
-       //     text-align: center;
-       //     transition: 0.3s;
-       //     box-shadow:
-       //         0 10px 27px rgba(0, 0, 0, 0.05);
-       // }
-
-`;
-const MenuItem = styled.li`
-    margin-top: 0.5rem;
-    margin-left: 5rem;
-    list-style: none;
-
-    @media (max-width: 768px){
-       margin: 1rem 0;
-       text-align: center;
-    }
 `;
 
 const MenuLink = styled(NavLink)`
@@ -109,11 +70,22 @@ const MenuLink = styled(NavLink)`
       color: #482ff7;
     }
 
-    @media(max-width: 768px){
-        &:active ${NavMenu}{
-            max-height: 0;
+`;
+
+const MenuItem = styled.li`
+    margin-top: 0.5rem;
+    margin-left: 5rem;
+    list-style: none;
+
+    @media (max-width: 768px){
+        margin: 1rem 0;
+        text-align: center;
+
+        &:nth-child(4) ${MenuLink}{
+            color:red;
         }
     }
+
 `;
 
 const TitleLink = styled(NavLink)`
@@ -126,7 +98,16 @@ const TitleLink = styled(NavLink)`
 
 
 const NavBar = () => {
+    const [user, setUser] = useUser();
     const [isOpen, setIsOpen] = useState(false);
+
+    const LogUser = () => {
+        setIsOpen(!isOpen);
+
+        if(user){
+            setUser(null);
+        }
+    }
 
     return(
         <Container>
@@ -146,6 +127,9 @@ const NavBar = () => {
                     </MenuItem>
                     <MenuItem>
                         <MenuLink to="/" onClick={()=>setIsOpen(!isOpen)}>Dashboard</MenuLink>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuLink to="/" onClick={LogUser}>{user != null ? "Log Out" : "Log In"}</MenuLink>
                     </MenuItem>
                 </NavMenu>
 

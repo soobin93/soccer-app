@@ -72,7 +72,7 @@ const Add = () => {
     };
 
     return(
-        <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
+        <Row type="flex" justify="center" align="middle" style={{minHeight: '90vh'}}>
             <Col span={20}>
                 <Card title="Add New User">
                     <Form

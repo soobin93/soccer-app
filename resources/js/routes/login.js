@@ -36,7 +36,7 @@ const LoginPage = () => {
   }
 
   return (
-    <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
+    <Row type="flex" justify="center" align="middle" style={{minHeight: '80vh'}}>
       <Col span={18}>
         <Title>Welcome to Soccer App!</Title>
         <Form
