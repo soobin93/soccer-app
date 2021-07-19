@@ -14,9 +14,11 @@ export default {
 
   getCurrentUser: () => api.get('user/current'),
 
-  register: (data) => api.post('register', data),
-
   getUsers: () => api.get('user'),
 
-  userUpdateAdmin: (data) => api.post('update', data),
+  getUser: (id) => api.get(`user/${id}`),
+
+  createUser: (data) => api.post('user', data),
+
+  updateUser: (id, data) => api.post(`user/${id}`, data)
 };
