@@ -104,7 +104,7 @@ const logOut = () => {
 }
 
 const NavBar = () => {
-  const [user, setUser] = useUser();
+  const [user] = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
   const LogUser = () => {

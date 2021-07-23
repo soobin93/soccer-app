@@ -3,7 +3,9 @@ import {Route, Redirect} from 'react-router-dom';
 import {useUser} from 'components/contexts/UserContext';
 
 const UserRoute = ({component: Component, ...rest}) => {
-  const user = useUser();
+  const [user] = useUser();
+  console.log(user);
+
   return (
     <Route {...rest} render={
       props => {
