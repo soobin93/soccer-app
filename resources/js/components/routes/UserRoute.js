@@ -4,7 +4,6 @@ import {useUser} from 'components/contexts/UserContext';
 
 const UserRoute = ({component: Component, ...rest}) => {
   const [user] = useUser();
-  console.log(user);
 
   return (
     <Route {...rest} render={
