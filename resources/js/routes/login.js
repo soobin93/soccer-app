@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import {Form, Input, Button, Row, Col, message} from 'antd';
+import {Form, Input, Button, Row, Col} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import {useHistory} from 'react-router-dom';
 import {useUser} from 'components/contexts/UserContext';
@@ -24,10 +24,12 @@ const LoginPage = () => {
   const onFinish = (data) => {
     event.preventDefault();
 
-
     UserApi.login(data).then(function (response) {
-      setUser(response.data.user);
-      history.push('/admin/user');
+      UserApi.getCurrentUser().then(function(res){
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        setUser(res.data.user);
+        history.push('/admin/user');
+      });
     }).catch(function (error) {
       if (error.response.data.hasOwnProperty('errors')) {
         const errors = error.response.data.errors;

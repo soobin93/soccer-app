@@ -3,15 +3,14 @@ import {Route, Redirect} from 'react-router-dom';
 import {useUser} from 'components/contexts/UserContext';
 
 const UserRoute = ({component: Component, ...rest}) => {
-  const [user, setUser] = useUser();
-
+  const user = useUser();
   return (
     <Route {...rest} render={
       props => {
         if (!user) {
           return <Redirect to={
             {
-              pathname: '/error/unauthorized',
+              pathname: '/login',
               state: {
                 from: props.location
               }
