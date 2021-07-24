@@ -43,7 +43,7 @@ const formItemLayout = {
   },
 };
 
-const Edit = () => {
+const AdminUserView = () => {
   const {id} = useParams();
   const [form] = Form.useForm();
   const [userData, setUserData] = useState(null);
@@ -175,7 +175,7 @@ const Edit = () => {
     );
 }
 
-export default Edit;
+export default AdminUserView;
 
 
 

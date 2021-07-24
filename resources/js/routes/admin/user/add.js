@@ -41,7 +41,7 @@ const formItemLayout = {
     },
 };
 
-const Add = () => {
+const AdminUserAdd = () => {
     const [form] = Form.useForm();
 
     const initialValues = {
@@ -176,7 +176,7 @@ const Add = () => {
     )
 }
 
-export default Add;
+export default AdminUserAdd;
 
 
 
