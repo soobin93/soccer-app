@@ -24,7 +24,6 @@ export default () => {
         <Route path="/" exact component={LandingPage} />
         <Route path="/login" exact component={LoginPage}/>
 
-
         {/* Error Pages */}
         <Route path="/error/unauthorized" exact component={Unauthorized}/>
 

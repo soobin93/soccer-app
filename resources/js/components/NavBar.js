@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {NavLink, useHistory} from "react-router-dom"
+import {NavLink} from "react-router-dom"
 import {useUser} from "components/contexts/UserContext";
 import UserApi from "api/UserApi";
 
@@ -11,7 +11,6 @@ const Container = styled.div`
   font-size: 15%;
   font-family: 'Roboto', sans-serif;
   border-bottom: 1px solid #E2E8F0;
-
 `;
 
 const Hamburger = styled.div`
@@ -54,7 +53,6 @@ const NavMenu = styled.ul`
     max-height: ${({isOpen}) => (isOpen ? "300px" : "0")};
     transition: max-height 0.3s ease-in;
   }
-
 `;
 
 const MenuLink = styled(NavLink)`
@@ -67,10 +65,17 @@ const MenuLink = styled(NavLink)`
   font-size: 1.2rem;
   font-weight: 300;
 
-  &:hover {
+  &:hover, &:focus {
     color: #482ff7;
   }
+`;
 
+const LogInLink = styled(MenuLink)`
+  color: #2f54eb;
+`;
+
+const LogOutLink = styled(MenuLink)`
+  color: red;
 `;
 
 const MenuItem = styled.li`
@@ -81,12 +86,7 @@ const MenuItem = styled.li`
   @media (max-width: 768px) {
     margin: 1rem 0;
     text-align: center;
-
-    &:nth-child(4) ${MenuLink} {
-      color: red;
-    }
   }
-
 `;
 
 const TitleLink = styled(NavLink)`
@@ -107,7 +107,7 @@ const NavBar = () => {
   const [user] = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
-  const LogUser = () => {
+  const logUser = () => {
     setIsOpen(!isOpen);
 
     if (user) {
@@ -120,11 +120,13 @@ const NavBar = () => {
     <Container>
       <Nav>
         <TitleLink exact to="/">SoccerApp.</TitleLink>
+
         <Hamburger onClick={() => setIsOpen(!isOpen)}>
           <span/>
           <span/>
           <span/>
         </Hamburger>
+
         <NavMenu isOpen={isOpen}>
           <MenuItem>
             <MenuLink exact to="/" onClick={() => setIsOpen(!isOpen)}>Home</MenuLink>
@@ -136,10 +138,13 @@ const NavBar = () => {
             <MenuLink to="/" onClick={() => setIsOpen(!isOpen)}>Dashboard</MenuLink>
           </MenuItem>
           <MenuItem>
-            <MenuLink to="/login" onClick={LogUser}>{user != null ? "Log Out" : "Log In"}</MenuLink>
+            {
+              !user
+                ? <LogInLink to="/login" onClick={logUser}>Log In</LogInLink>
+                : <LogOutLink to="/login" onClick={logUser}>Log Out</LogOutLink>
+            }
           </MenuItem>
         </NavMenu>
-
       </Nav>
     </Container>
   )
