@@ -31,11 +31,13 @@ const LoginPage = () => {
     event.preventDefault();
 
     UserApi.login(data).then(function (response) {
-      UserApi.getCurrentUser().then(function(res){
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        setUser(res.data.user);
-        history.push('/admin/user');
-      });
+      if (response.data.hasOwnProperty('user')) {
+        const currentUser = response.data.user;
+
+        localStorage.setItem('user', JSON.stringify(currentUser));
+        setUser(currentUser);
+        history.push('/');
+      }
     }).catch(function (error) {
       if (error.response.data.hasOwnProperty('errors')) {
         const errors = error.response.data.errors;

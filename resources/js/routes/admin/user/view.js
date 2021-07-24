@@ -52,7 +52,7 @@ const AdminUserView = () => {
   const onFinish = (data) => {
     UserApi.updateUser(id, data).then(function (response) {
       message.success(response.data.message);
-      history.push('/admin/user');
+      history.push('/admin');
     }).catch(function (error) {
       if (error.response.data.hasOwnProperty('errors')) {
         const errors = error.response.data.errors;
@@ -90,15 +90,15 @@ const AdminUserView = () => {
 
   return !userData
     // Loading
-    // @TODO: Add a loader here
+    // @TODO: Add a proper loader here
     ? (
-      <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
+      <Row type="flex" justify="center">
         <Col span={20} style={{textAlign: 'center'}}>
           <h2>Loading...</h2>
         </Col>
       </Row>
     ) : (
-      <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
+      <Row type="flex" justify="center">
         <Col span={20}>
           <Card title="Update">
             <Form
@@ -176,7 +176,3 @@ const AdminUserView = () => {
 }
 
 export default AdminUserView;
-
-
-
-

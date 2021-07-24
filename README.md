@@ -1,13 +1,14 @@
 # Soccer App
 
 ## Road Map
-- [ ] User Authentication
+- [x] User Authentication
 - [ ] User Manager
-- [ ] Attend / Not Attend Vote Page
-- [ ] Captain Picker
-- [ ] Match Generator
+- [ ] Match Manager
+- [ ] Attend / Not Attend Vote Page for users
 - [ ] Team Member Pick Page
-- [ ] First Launching
+- [ ] Team chat
+- [ ] Team Strategy / Position Page
+- [ ] First Launch (Going Live)
 
 ## Installation
 1. Install plugins (Both back-end and front-end)

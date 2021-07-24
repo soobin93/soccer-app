@@ -1,23 +1,22 @@
 import React from "react";
-import Router from "./Router";
+import Router, {beforeRender} from "./Router";
 import ReactDOM from 'react-dom';
 import "antd/dist/antd.css";
-import {UserProvider, useUser} from "./contexts/UserContext";
+import {UserProvider} from "./contexts/UserContext";
 
 function App() {
   return (
-
     <div className="App">
       <UserProvider>
         <Router/>
       </UserProvider>
     </div>
-
   );
 }
 
 export default App;
 
-if (document.getElementById('login-test')) {
-  ReactDOM.render(<App/>, document.getElementById('login-test'));
+if (document.getElementById('app')) {
+  beforeRender();
+  ReactDOM.render(<App />, document.getElementById('app'));
 }

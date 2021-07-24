@@ -26,7 +26,7 @@ const Hamburger = styled.div`
     border-radius: 5px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 860px) {
     display: flex;
   }
 `;
@@ -45,13 +45,24 @@ const NavMenu = styled.ul`
   align-items: center;
   position: relative;
 
-  @media (max-width: 768px) {
+  @media (max-width: 860px) {
     padding-left: 0;
     overflow: hidden;
     flex-direction: column;
     width: 100%;
     max-height: ${({isOpen}) => (isOpen ? "300px" : "0")};
     transition: max-height 0.3s ease-in;
+  }
+`;
+
+const MenuItem = styled.li`
+  margin-top: 0.5rem;
+  margin-left: 5rem;
+  list-style: none;
+
+  @media (max-width: 860px) {
+    margin: 1rem 0;
+    text-align: center;
   }
 `;
 
@@ -78,17 +89,6 @@ const LogOutLink = styled(MenuLink)`
   color: red;
 `;
 
-const MenuItem = styled.li`
-  margin-top: 0.5rem;
-  margin-left: 5rem;
-  list-style: none;
-
-  @media (max-width: 768px) {
-    margin: 1rem 0;
-    text-align: center;
-  }
-`;
-
 const TitleLink = styled(NavLink)`
   padding: 1rem 0;
   text-decoration: none;
@@ -111,7 +111,7 @@ const NavBar = () => {
     setIsOpen(!isOpen);
 
     if (user) {
-      localStorage.setItem('user', null);
+      localStorage.setItem('user', '');
       logOut();
     }
   }
@@ -129,13 +129,7 @@ const NavBar = () => {
 
         <NavMenu isOpen={isOpen}>
           <MenuItem>
-            <MenuLink exact to="/" onClick={() => setIsOpen(!isOpen)}>Home</MenuLink>
-          </MenuItem>
-          <MenuItem>
-            <MenuLink to="/admin/user/add" onClick={() => setIsOpen(!isOpen)}>Add User</MenuLink>
-          </MenuItem>
-          <MenuItem>
-            <MenuLink to="/" onClick={() => setIsOpen(!isOpen)}>Dashboard</MenuLink>
+            <MenuLink to="/admin" onClick={() => setIsOpen(!isOpen)}>Admin</MenuLink>
           </MenuItem>
           <MenuItem>
             {

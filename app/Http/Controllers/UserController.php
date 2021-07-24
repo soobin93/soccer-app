@@ -61,9 +61,14 @@ class UserController extends Controller
 
         $user->update([
             'name' => $request->name,
-            'password' => Hash::make($request->password),
             'admin' => $request->admin
         ]);
+
+        if ($request->password) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
 
         return response()->json([
             'message' => 'The user has been updated successfully!'
