@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import {Form, Input, Button, Row, Col} from 'antd';
+import {Form, Input, Button, Row, Col, Card} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import {useHistory} from 'react-router-dom';
 import {useUser} from 'components/contexts/UserContext';
@@ -13,10 +13,10 @@ const Container = styled(Row)`
   justify-content: center;
 `;
 
-const Title = styled.h1`
-  text-align: center;
-  margin-bottom: 10%;
-`
+const LogInCard = styled(Card)`
+  padding: 40px 14px;
+`;
+
 const StyledButton = styled(Button)`
   width: 100%;
 `;
@@ -54,60 +54,48 @@ const LoginPage = () => {
     });
   };
 
-  const logOut = () => {
-    UserApi.logout().then(function (response) {
-      location.reload();
-    });
-  }
-
   return (
     <Container>
-      <Col span={18}>
-        <Title>Welcome to Soccer App</Title>
-        <Form
-          form={form}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: 'Please type your email',
-              }
-            ]}
+      <Col span={22}>
+        <LogInCard>
+          <Form
+            form={form}
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={onFinish}
           >
-            <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="Email"/>
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: 'Please type your password',
-              },
-            ]}
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon"/>}
-              type="password"
-              placeholder="Password"
-            />
-          </Form.Item>
-          <Form.Item>
+            <Form.Item
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please type your email',
+                }
+              ]}
+            >
+              <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="Email"/>
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please type your password',
+                },
+              ]}
+            >
+              <Input
+                prefix={<LockOutlined className="site-form-item-icon"/>}
+                type="password"
+                placeholder="Password"
+              />
+            </Form.Item>
             <StyledButton type="primary" htmlType="submit" className="login-form-button">
-              Log in
+              Sign In
             </StyledButton>
-          </Form.Item>
-          <Form.Item>
-            <StyledButton type="danger" onClick={logOut}>
-              Log Out
-            </StyledButton>
-          </Form.Item>
-        </Form>
+          </Form>
+        </LogInCard>
       </Col>
     </Container>
   );
