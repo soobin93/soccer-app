@@ -5,7 +5,7 @@ import {useUser} from "components/contexts/UserContext";
 import UserApi from "api/UserApi";
 
 const Container = styled.div`
-  margin: 0;
+  margin-bottom: 20px;
   padding: 0;
   box-sizing: border-box;
   font-size: 15%;
