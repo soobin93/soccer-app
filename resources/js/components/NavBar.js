@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import {NavLink, useHistory} from "react-router-dom"
 import {useUser} from "components/contexts/UserContext";
+import UserApi from "api/UserApi";
 
 const Container = styled.div`
   margin: 0;
@@ -96,16 +97,22 @@ const TitleLink = styled(NavLink)`
   color: #482ff7;
 `;
 
+const logOut = () => {
+  UserApi.logout().then(function (response) {
+    location.reload();
+  });
+}
 
 const NavBar = () => {
-  const [user, setUser] = useUser();
+  const [user] = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
   const LogUser = () => {
     setIsOpen(!isOpen);
 
     if (user) {
-      setUser(null);
+      localStorage.setItem('user', null);
+      logOut();
     }
   }
 
@@ -129,7 +136,7 @@ const NavBar = () => {
             <MenuLink to="/" onClick={() => setIsOpen(!isOpen)}>Dashboard</MenuLink>
           </MenuItem>
           <MenuItem>
-            <MenuLink to="/" onClick={LogUser}>{user != null ? "Log Out" : "Log In"}</MenuLink>
+            <MenuLink to="/login" onClick={LogUser}>{user != null ? "Log Out" : "Log In"}</MenuLink>
           </MenuItem>
         </NavMenu>
 
