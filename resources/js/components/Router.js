@@ -15,8 +15,6 @@ import NavBar from "components/NavBar";
 import LandingPage from "components/LandingPage";
 
 export default () => {
-
-
   return (
     <Router>
       <NavBar/>
@@ -33,8 +31,6 @@ export default () => {
         <UserRoute path="/admin/user" exact component={AdminUser}/>
         <UserRoute path="/admin/user/add" exact component={AdminUserAdd}/>
         <UserRoute path="/admin/user/:id" exact component={AdminUserView}/>
-
-
       </Switch>
     </Router>
   )
