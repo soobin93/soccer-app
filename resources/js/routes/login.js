@@ -24,7 +24,6 @@ const LoginPage = () => {
   const onFinish = (data) => {
     event.preventDefault();
 
-
     UserApi.login(data).then(function (response) {
       setUser(response.data.user);
       history.push('/admin/user');
@@ -55,7 +54,7 @@ const LoginPage = () => {
   return (
     <Row type="flex" justify="center" align="middle" style={{minHeight: '80vh'}}>
       <Col span={18}>
-        <Title>Welcome to Soccer App!</Title>
+        <Title>Welcome to Soccer App</Title>
         <Form
           form={form}
           initialValues={{
