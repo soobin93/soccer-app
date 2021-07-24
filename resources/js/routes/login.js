@@ -7,6 +7,12 @@ import {useUser} from 'components/contexts/UserContext';
 
 import UserApi from 'api/UserApi';
 
+const Container = styled(Row)`
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+`;
+
 const Title = styled.h1`
   text-align: center;
   margin-bottom: 10%;
@@ -55,7 +61,7 @@ const LoginPage = () => {
   }
 
   return (
-    <Row type="flex" justify="center" align="middle" style={{minHeight: '80vh'}}>
+    <Container>
       <Col span={18}>
         <Title>Welcome to Soccer App</Title>
         <Form
@@ -103,7 +109,7 @@ const LoginPage = () => {
           </Form.Item>
         </Form>
       </Col>
-    </Row>
+    </Container>
   );
 }
 
