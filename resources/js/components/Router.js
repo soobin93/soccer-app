@@ -14,6 +14,7 @@ import Unauthorized from 'routes/error/unauthorized';
 import NavBar from "components/NavBar";
 import LandingPage from "components/LandingPage";
 import UserApi from "api/UserApi";
+import UserProfileView from "routes/user/profile";
 
 export default () => {
   return (
@@ -27,6 +28,7 @@ export default () => {
 
         {/* Member Pages */}
         <UserRoute path="/" exact component={LandingPage} />
+        <UserRoute path="/user/profile" exact component={UserProfileView} />
 
         {/* Admin Pages */}
         <UserRoute path="/admin" exact component={Admin}/>

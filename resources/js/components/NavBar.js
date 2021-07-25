@@ -128,9 +128,19 @@ const NavBar = () => {
         </Hamburger>
 
         <NavMenu isOpen={isOpen}>
-          <MenuItem>
-            <MenuLink to="/admin" onClick={() => setIsOpen(!isOpen)}>Admin</MenuLink>
-          </MenuItem>
+          {user ? (
+            <MenuItem>
+              <MenuLink to="/user/profile" onClick={() => setIsOpen(!isOpen)}>Profile</MenuLink>
+            </MenuItem>
+          ) : null}
+
+
+          {user && user.admin === 1 ? (
+            <MenuItem>
+              <MenuLink to="/admin" onClick={() => setIsOpen(!isOpen)}>Admin</MenuLink>
+            </MenuItem>
+          ) : null}
+
           <MenuItem>
             {
               !user
@@ -145,5 +155,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
