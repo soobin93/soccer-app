@@ -2,7 +2,7 @@
 
 ## Road Map
 - [x] User Authentication
-- [ ] User Manager
+- [x] User Manager
 - [ ] Match Manager
 - [ ] Attend / Not Attend Vote Page for users
 - [ ] Team Member Pick Page
