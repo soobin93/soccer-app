@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import UserApi from 'api/UserApi';
 import AddUserModal from "components/admin/AddUserModal";
+import EditUserModal from "components/admin/EditUserModal";
 
 // Styles
 const Container = styled.div``;
@@ -25,19 +26,10 @@ const Search = styled(Input.Search)`
 
 const UserItem = styled(List.Item)`
   display: block;
+  cursor: pointer;
 
   &:hover, &:focus {
     background-color: #f0f5ff;
-  }
-`;
-
-const UserLink = styled(Link)`
-  text-decoration: none;
-  cursor: pointer;
-  color: black;
-
-  &:hover, &:focus {
-    color: black;
   }
 `;
 
@@ -67,14 +59,25 @@ const UserTypeTag = styled(Tag)`
 // Component
 function AdminUsers() {
   const [userData, setUserData] = useState([]);
-  const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [editUserId, setEditUserId] = useState(null);
+  const [addUserModalIsVisible, setAddUserModalIsVisible] = useState(false);
+  const [editUserModalIsVisible, setEditUserModalIsVisible] = useState(false);
 
-  const showModal = () => {
-    setModalIsVisible(true);
+  const showAddUserModal = () => {
+    setAddUserModalIsVisible(true);
   };
 
-  const hideModal = () => {
-    setModalIsVisible(false);
+  const hideAddUserModal = () => {
+    setAddUserModalIsVisible(false);
+  };
+
+  const showEditUserModal = (id) => {
+    setEditUserId(id);
+    setEditUserModalIsVisible(true);
+  };
+
+  const hideEditUserModal = () => {
+    setEditUserModalIsVisible(false);
   };
 
   const loadUsers = () => {
@@ -111,8 +114,8 @@ function AdminUsers() {
               </ToolbarLeft>
 
               <ToolbarRight>
-                <Button type="success" onClick={showModal}>
-                  <PlusOutlined /> New User
+                <Button type="success" onClick={showAddUserModal}>
+                  <PlusOutlined/> New User
                 </Button>
               </ToolbarRight>
             </Toolbar>
@@ -121,23 +124,21 @@ function AdminUsers() {
               bordered
               dataSource={userData}
               renderItem={user => (
-                <UserLink to={`/admin/user/${user.id}`}>
-                  <UserItem>
-                    <Row>
-                      <UserDetails xs={{span: 24, order: 2}} md={{span: 18, order: 1}}>
-                        {user.name}
-                        <UserEmail>- {user.email}</UserEmail>
-                      </UserDetails>
+                <UserItem onClick={() => showEditUserModal(user.id)}>
+                  <Row>
+                    <UserDetails xs={{span: 24, order: 2}} md={{span: 18, order: 1}}>
+                      {user.name}
+                      <UserEmail>- {user.email}</UserEmail>
+                    </UserDetails>
 
-                      <UserType xs={{span: 24, order: 1}} md={{span: 6, order: 2}}>
-                        {user.admin
-                          ? <UserTypeTag color="red" style={{padding: '0 12px'}}>admin</UserTypeTag>
-                          : <UserTypeTag color="green">member</UserTypeTag>
-                        }
-                      </UserType>
-                    </Row>
-                  </UserItem>
-                </UserLink>
+                    <UserType xs={{span: 24, order: 1}} md={{span: 6, order: 2}}>
+                      {user.admin
+                        ? <UserTypeTag color="red" style={{padding: '0 12px'}}>admin</UserTypeTag>
+                        : <UserTypeTag color="green">member</UserTypeTag>
+                      }
+                    </UserType>
+                  </Row>
+                </UserItem>
               )}
             />
           </Card>
@@ -146,13 +147,20 @@ function AdminUsers() {
 
       {/*  New User Modal*/}
       <AddUserModal
-        visible={modalIsVisible}
-        onCancel={hideModal}
+        visible={addUserModalIsVisible}
+        onCancel={hideAddUserModal}
+        onSubmit={loadUsers}
+      />
+
+      {/* Edit User Modals */}
+      <EditUserModal
+        id={editUserId}
+        visible={editUserModalIsVisible}
+        onCancel={hideEditUserModal}
         onSubmit={loadUsers}
       />
     </Container>
-    );
-
+  );
 }
 
 export default AdminUsers;

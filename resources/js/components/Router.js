@@ -1,13 +1,11 @@
 import React from 'react';
-import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import LoginPage from 'routes/login';
 
 import AdminRoute from 'components/routes/AdminRoute';
 import UserRoute from 'components/routes/UserRoute';
 
 import Admin from 'routes/admin';
-import AdminUserAdd from 'routes/admin/user/add';
-import AdminUserView from 'routes/admin/user/view';
 
 import Unauthorized from 'routes/error/unauthorized';
 
@@ -30,7 +28,6 @@ export default () => {
 
         {/* Admin Pages */}
         <UserRoute path="/admin" exact component={Admin}/>
-        <UserRoute path="/admin/user/:id" exact component={AdminUserView}/>
       </Switch>
     </Router>
   )
