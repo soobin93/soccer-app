@@ -30,7 +30,6 @@ export default () => {
 
         {/* Admin Pages */}
         <UserRoute path="/admin" exact component={Admin}/>
-        <UserRoute path="/admin/user/add" exact component={AdminUserAdd}/>
         <UserRoute path="/admin/user/:id" exact component={AdminUserView}/>
       </Switch>
     </Router>
