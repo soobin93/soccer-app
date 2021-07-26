@@ -47,6 +47,10 @@ export function beforeRender() {
       if (response.data.hasOwnProperty('user')) {
         localStorage.setItem('user', JSON.stringify(response.data.user));
       }
+    }).catch(function (error) {
+      UserApi.logout().then(function (response) {
+        location.reload();
+      });
     });
   }
 }

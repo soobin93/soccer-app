@@ -6,23 +6,12 @@ import styled from 'styled-components';
 import UserApi from 'api/UserApi';
 import {useUser} from "components/contexts/UserContext";
 import {UploadOutlined, UserOutlined} from "@ant-design/icons";
+import UserAvatar from "components/Avatar";
 
 const {Option} = Select;
 
 const StyledButton = styled(Button)`
   width: 100%;
-`
-
-const AvatarContainer = styled.div`
-  display: flex; 
-  justify-content: center;
-  margin-bottom: 5%;
-
-`
-const StyledUpload = styled(Upload)`
-  display: flex; 
-  justify-content: center;
-  margin-bottom: 5%;
 `
 
 const tailFormItemLayout = {
@@ -57,23 +46,6 @@ const formItemLayout = {
   },
 };
 
-const properties = {
-  name: 'file',
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
 
 const UserProfile = (props) => {
   const [id, setId] = useState(useParams().id);
@@ -157,15 +129,7 @@ const UserProfile = (props) => {
               {/*Where do we save and get image from?*/}
 
               {!props.isAdminView ? (
-                <>
-                <AvatarContainer>
-                  <Avatar size={100} icon={<UserOutlined />} />
-                </AvatarContainer>
-                <StyledUpload {...properties}>
-                  <Button icon={<UploadOutlined/>}>Upload</Button>
-                </StyledUpload>
-
-                </>
+                <UserAvatar />
               ) : null}
 
 

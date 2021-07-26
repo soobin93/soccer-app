@@ -1,5 +1,6 @@
 import axios from 'axios';
 import api from 'api';
+import {useUser} from "components/contexts/UserContext";
 
 export default {
   login: async (credentials) => {
@@ -10,7 +11,13 @@ export default {
     return api.post('login', credentials)
   },
 
-  logout: () => api.post('logout'),
+  logout: () => {
+    const [user, setUser] = useUser();
+    localStorage.removeItem('user');
+    setUser(null);
+
+    return api.post('logout');
+  },
 
   getCurrentUser: () => api.get('user/current'),
 

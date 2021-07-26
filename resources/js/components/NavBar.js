@@ -97,22 +97,17 @@ const TitleLink = styled(NavLink)`
   color: #482ff7;
 `;
 
-const logOut = () => {
-  UserApi.logout().then(function (response) {
-    location.reload();
-  });
-}
-
 const NavBar = () => {
-  const [user] = useUser();
+  const [user, setUser] = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
   const logUser = () => {
     setIsOpen(!isOpen);
 
     if (user) {
-      localStorage.setItem('user', '');
-      logOut();
+      UserApi.logout().then(function (response) {
+        location.reload();
+      });
     }
   }
 
