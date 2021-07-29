@@ -8,10 +8,6 @@ import UserForm from "components/UserForm";
 const AddUserModal = ({ visible, onCancel, onSubmit }) => {
   const [form] = Form.useForm();
 
-  const initialValues = {
-    admin: false
-  };
-
   const onFinish = (data) => {
     UserApi.createUser(data).then(function (response) {
       message.success(response.data.message);
