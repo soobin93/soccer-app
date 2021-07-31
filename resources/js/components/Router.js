@@ -1,18 +1,17 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import LoginPage from 'routes/login';
 
-import AdminRoute from 'components/routes/AdminRoute';
-import UserRoute from 'components/routes/UserRoute';
-
-import Admin from 'routes/admin';
-
-import Unauthorized from 'routes/error/unauthorized';
-
+import AdminRoute from "components/routes/AdminRoute";
+import UserRoute from "components/routes/UserRoute";
 import NavBar from "components/NavBar";
 import LandingPage from "components/LandingPage";
+
 import UserApi from "api/UserApi";
-import UserProfileView from "routes/user/profile";
+
+import Admin from "pages/admin";
+import LoginPage from "pages/login";
+import ProfilePage from "pages/profile";
+import Unauthorized from "pages/error/unauthorized";
 
 export default () => {
   return (
@@ -26,7 +25,7 @@ export default () => {
 
         {/* Member Pages */}
         <UserRoute path="/" exact component={LandingPage} />
-        <UserRoute path="/user/profile" exact component={UserProfileView} />
+        <UserRoute path="/user/profile" exact component={ProfilePage} />
 
         {/* Admin Pages */}
         <UserRoute path="/admin" exact component={Admin}/>
