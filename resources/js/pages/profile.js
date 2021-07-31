@@ -1,38 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import UserForm from "components/UserForm";
 import UserApi from "api/UserApi";
 import {Card, Col, Form, message, Row} from "antd";
-import {useHistory, useParams} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {useUser} from "components/contexts/UserContext";
 
 const UserProfileView = () => {
-  const [id, setId] = useState(useParams().id);
   const [form] = Form.useForm();
-  const [user] = useUser();
-  const [userData, setUserData] = useState(null);
+  const [user, setUser] = useUser();
   const history = useHistory();
 
-  const setCurrentId = () => {
-    if (!id) {
-      setId(user.id);
-    }
-  }
-
-  const loadUser = () => {
-    if (id) {
-      UserApi.getUser(id).then(function (response) {
-        if (response.data.hasOwnProperty('user')) {
-          setUserData(response.data.user);
-        }
-      }).catch(function (error) {
-        // @TODO: Print error message here
-      });
-    }
-  }
-
   const onFinish = (data) => {
-    UserApi.updateUser(id, data).then(function (response) {
+    UserApi.updateUser(user.id, data).then(function (response) {
       message.success(response.data.message);
+      setUser(response.data.user);
       history.push('/');
     }).catch(function (error) {
       if (error.response.data.hasOwnProperty('errors')) {
@@ -55,11 +36,10 @@ const UserProfileView = () => {
 
   // When the page is loaded
   useEffect(() => {
-    setCurrentId();
-    loadUser();
-  }, [id]);
+    UserApi.getCurrentUser();
+  }, []);
 
-  return !userData
+  return !user
     // Loading
     // @TODO: Add a proper loader here
     ? (
@@ -71,8 +51,8 @@ const UserProfileView = () => {
     ) : (
       <Row type="flex" justify="center">
         <Col span={20}>
-          <Card title={"Profile"}>
-            <UserForm onFinish={onFinish} isProfile={true} userData={userData} form={form}/>
+          <Card title="Profile">
+            <UserForm onFinish={onFinish} isProfile={true} userData={user} form={form}/>
           </Card>
         </Col>
       </Row>

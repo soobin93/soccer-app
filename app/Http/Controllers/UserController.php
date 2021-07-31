@@ -71,7 +71,8 @@ class UserController extends Controller
         }
 
         return response()->json([
-            'message' => 'The user has been updated successfully!'
+            'message' => 'The user has been updated successfully!',
+            'user' => $user
         ], Response::HTTP_OK);
     }
 

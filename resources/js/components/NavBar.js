@@ -125,7 +125,7 @@ const NavBar = () => {
         <NavMenu isOpen={isOpen}>
           {user ? (
             <MenuItem>
-              <MenuLink to="/user/profile" onClick={() => setIsOpen(!isOpen)}>Profile</MenuLink>
+              <MenuLink to="/profile" onClick={() => setIsOpen(!isOpen)}>Profile</MenuLink>
             </MenuItem>
           ) : null}
 

@@ -15,7 +15,17 @@ export default {
     return api.post('logout');
   },
 
-  getCurrentUser: () => api.get('user/current'),
+  getCurrentUser: () => {
+    api.get('user/current').then(function (response) {
+      if (response.data.hasOwnProperty('user')) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
+    }).catch(function (error) {
+      this.logout().then(function (response) {
+        location.reload();
+      });
+    })
+  },
 
   getUsers: () => api.get('user'),
 
