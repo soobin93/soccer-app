@@ -21,7 +21,8 @@ export default {
         localStorage.setItem('user', JSON.stringify(response.data.user));
       }
     }).catch(function (error) {
-      this.logout().then(function (response) {
+      localStorage.removeItem('user');
+      api.post('logout').then(function (response) {
         location.reload();
       });
     })
@@ -33,5 +34,15 @@ export default {
 
   createUser: (data) => api.post('user', data),
 
-  updateUser: (id, data) => api.post(`user/${id}`, data)
+  updateUser: (id, data) => {
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (data[key] !== null) {
+        formData.append(key, data[key]);
+      }
+    }
+
+    return api.post(`user/${id}`, formData);
+  }
 };

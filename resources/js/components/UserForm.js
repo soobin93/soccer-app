@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
-import {Button, Form, Input, Select} from "antd";
-import UserAvatar from "components/Avatar";
+import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
+import {Button, Form, Input, Select} from "antd";
+import AvatarInput from "components/AvatarInput";
 
 const {Option} = Select;
 
@@ -43,34 +43,37 @@ const formItemLayout = {
 
 const UserForm = (props) => {
 
+  const [avatar, setAvatar] = useState(null);
+
   const onFinish = (data) => {
+    if (avatar) data['avatar'] = avatar;
     props.onFinish(data);
   };
 
   useEffect(() => {
 
-    if(props.userData){
+    if (props.userData) {
       props.form.setFieldsValue({
         email: props.userData.email,
         name: props.userData.name,
-        admin: !!props.userData.admin
+        admin: !!props.userData.admin,
+        password: null,
+        password_confirmation: null
       });
     }
-  })
 
-  return(
+  }, []);
+
+  return (
     <Form
       {...formItemLayout}
       form={props.form}
       name="update"
       onFinish={onFinish}
     >
-      {/*Where do we save and get image from?*/}
-
       {props.isProfile ? (
-        <UserAvatar />
+        <AvatarInput onUpdate={setAvatar} />
       ) : null}
-
 
       <Form.Item
         name="email"
@@ -78,9 +81,9 @@ const UserForm = (props) => {
         initialValue={props.userData ? props.userData.email : ""}
       >
         {props.userData ? (
-          <Input disabled />
+          <Input disabled/>
         ) : (
-          <Input />
+          <Input/>
         )}
       </Form.Item>
 

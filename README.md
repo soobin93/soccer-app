@@ -25,11 +25,16 @@ composer install && npm install
 php artisan key:generate
 ```
 
-5. Compile Javascript files
+5. Create a symlink for Storage
+```
+php artisan storage:link
+```
+
+6. Compile Javascript files
 `npm run dev` or
 `npm run watch` or
 `npm run production`
 
-6. Migrate DB
+7. Migrate DB
 `php artisan migrate` or
 `php artisan migrate:fresh`
