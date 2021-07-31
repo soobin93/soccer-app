@@ -39,24 +39,15 @@ const UserProfileView = () => {
     UserApi.getCurrentUser();
   }, []);
 
-  return !user
-    // Loading
-    // @TODO: Add a proper loader here
-    ? (
-      <Row type="flex" justify="center">
-        <Col span={20} style={{textAlign: 'center'}}>
-          <h2>Loading...</h2>
-        </Col>
-      </Row>
-    ) : (
-      <Row type="flex" justify="center">
-        <Col span={20}>
-          <Card title="Profile">
-            <UserForm onFinish={onFinish} isProfile={true} userData={user} form={form}/>
-          </Card>
-        </Col>
-      </Row>
-    );
+  return (
+    <Row type="flex" justify="center">
+      <Col span={20}>
+        <Card title="Profile">
+          <UserForm onFinish={onFinish} isProfile={true} userData={user} form={form}/>
+        </Card>
+      </Col>
+    </Row>
+  );
 }
 
 export default UserProfileView;
