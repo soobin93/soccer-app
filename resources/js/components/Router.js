@@ -38,13 +38,15 @@ export default () => {
 }
 
 export function beforeRender() {
-  const excludedPageList = [
 
-  ];
-
+  const currentPath = window.location.pathname;
   const localStorageUser = localStorage.getItem('user');
 
-  if (localStorageUser) {
+  const excludedPageList = [
+    '/profile'
+  ];
+
+  if (!excludedPageList.includes(currentPath) && localStorageUser) {
     UserApi.getCurrentUser();
   }
 }
