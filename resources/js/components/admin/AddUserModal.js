@@ -1,35 +1,12 @@
 import React from 'react';
-import {Modal, Form, Input, Button, Card, Select, message} from 'antd';
+import {Modal, Form, Button, Card, message} from 'antd';
 
 import UserApi from 'api/UserApi';
+import UserForm from "components/UserForm";
 
-const {Option} = Select;
-
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
-  },
-};
 
 const AddUserModal = ({ visible, onCancel, onSubmit }) => {
   const [form] = Form.useForm();
-
-  const initialValues = {
-    admin: false
-  };
 
   const onFinish = (data) => {
     UserApi.createUser(data).then(function (response) {
@@ -68,95 +45,7 @@ const AddUserModal = ({ visible, onCancel, onSubmit }) => {
       ]}
     >
       <Card>
-        <Form
-          {...formItemLayout}
-          form={form}
-          id="add-user"
-          initialValues={initialValues}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            name="email"
-            label="E-mail"
-            rules={[
-              {
-                required: true,
-                message: 'Please type your E-mail',
-              }
-            ]}
-          >
-            <Input/>
-          </Form.Item>
-
-          <Form.Item
-            name="name"
-            label="Name"
-            tooltip="What do you want others to call you?"
-            rules={[
-              {
-                required: true,
-                message: 'Please type your name',
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input/>
-          </Form.Item>
-
-          <Form.Item
-            name="admin"
-            label="User Type"
-            rules={[
-              {required: true, message: 'Please select your user type!'},
-            ]}
-          >
-            <Select
-              placeholder="Select user type"
-              allowClear
-            >
-              <Option value={false}>Member</Option>
-              <Option value={true}>Admin</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            label="Password"
-            rules={[
-              {
-                required: true,
-                message: 'Please type your password!',
-              },
-            ]}
-            hasFeedback
-          >
-            <Input.Password/>
-          </Form.Item>
-
-          <Form.Item
-            name="password_confirmation"
-            label="Confirm Password"
-            dependencies={['password']}
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                message: 'Please confirm your password!',
-              },
-              ({getFieldValue}) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
-                    return Promise.resolve();
-                  }
-
-                  return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                },
-              }),
-            ]}
-          >
-            <Input.Password/>
-          </Form.Item>
-        </Form>
+        <UserForm onFinish={onFinish} isProfile={false} form={form}/>
       </Card>
     </Modal>
   )

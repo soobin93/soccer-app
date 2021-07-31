@@ -15,7 +15,18 @@ export default {
     return api.post('logout');
   },
 
-  getCurrentUser: () => api.get('user/current'),
+  getCurrentUser: () => {
+    api.get('user/current').then(function (response) {
+      if (response.data.hasOwnProperty('user')) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
+    }).catch(function (error) {
+      localStorage.removeItem('user');
+      api.post('logout').then(function (response) {
+        location.reload();
+      });
+    })
+  },
 
   getUsers: () => api.get('user'),
 
@@ -23,5 +34,15 @@ export default {
 
   createUser: (data) => api.post('user', data),
 
-  updateUser: (id, data) => api.post(`user/${id}`, data)
+  updateUser: (id, data) => {
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (data[key] !== null) {
+        formData.append(key, data[key]);
+      }
+    }
+
+    return api.post(`user/${id}`, formData);
+  }
 };

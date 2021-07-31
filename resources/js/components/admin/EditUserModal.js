@@ -1,41 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {Modal, Form, Input, Button, Card, Select, message} from 'antd';
+import {Modal, Form, Button, Card, message} from 'antd';
 
 import UserApi from 'api/UserApi';
+import UserForm from "components/UserForm";
 
-const {Option} = Select;
-
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
-  },
-};
 
 const EditUserModal = ({id, visible, onCancel, onSubmit}) => {
   const [form] = Form.useForm();
+  const [userData, setUserData] = useState(null);
 
   const loadUser = () => {
     UserApi.getUser(id).then(function (response) {
       if (response.data.hasOwnProperty('user')) {
-        const userData = response.data.user;
-        form.setFieldsValue({
-          email: userData.email,
-          name: userData.name,
-          admin: !!userData.admin
-        });
+        setUserData(response.data.user);
       }
     }).catch(function (error) {
       // @TODO: Print error message here
@@ -87,65 +64,7 @@ const EditUserModal = ({id, visible, onCancel, onSubmit}) => {
       ]}
     >
       <Card>
-        <Form
-          {...formItemLayout}
-          form={form}
-          id={`edit-user-${id}`}
-          onFinish={onFinish}
-        >
-
-          <Form.Item
-            name="email"
-            label="Email"
-          >
-            <Input disabled/>
-          </Form.Item>
-
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[
-              {
-                required: true,
-                message: 'Name input is required',
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input/>
-          </Form.Item>
-
-          <Form.Item
-            name="admin"
-            label="User Type"
-            rules={[
-              {required: true, message: 'User type input is required'},
-            ]}
-          >
-            <Select
-              placeholder="Select user type"
-              allowClear
-            >
-              <Option value={false}>Member</Option>
-              <Option value={true}>Admin</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            label="Password"
-          >
-            <Input.Password/>
-          </Form.Item>
-
-          <Form.Item
-            name="password_confirmation"
-            label="Confirm Password"
-            dependencies={['password']}
-          >
-            <Input.Password/>
-          </Form.Item>
-        </Form>
+        <UserForm onFinish={onFinish} isProfile={false} userData={userData} form={form}/>
       </Card>
     </Modal>
   );
