@@ -1,17 +1,16 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import LoginPage from 'routes/login';
 
 import AdminRoute from 'components/routes/AdminRoute';
 import UserRoute from 'components/routes/UserRoute';
-
-import Admin from 'routes/admin';
-
-import Unauthorized from 'routes/error/unauthorized';
-
 import NavBar from "components/NavBar";
 import LandingPage from "components/LandingPage";
+
 import UserApi from "api/UserApi";
+
+import Admin from 'pages/admin';
+import LoginPage from 'pages/login';
+import Unauthorized from 'pages/error/unauthorized';
 
 export default () => {
   return (

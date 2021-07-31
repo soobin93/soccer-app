@@ -6,7 +6,7 @@ module.exports = {
     alias: {
       components: path.join(__dirname, 'resources/js/components'),
       api: path.join(__dirname, 'resources/js/api'),
-      routes: path.join(__dirname, 'resources/js/routes'),
+      pages: path.join(__dirname, 'resources/js/pages'),
     }
   }
 };
