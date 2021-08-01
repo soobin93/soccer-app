@@ -4,7 +4,6 @@ import {Modal, Form, Button, Card, message} from 'antd';
 import UserApi from 'api/UserApi';
 import UserForm from "components/UserForm";
 
-
 const EditUserModal = ({id, visible, onCancel, onSubmit}) => {
   const [form] = Form.useForm();
   const [userData, setUserData] = useState(null);
@@ -57,11 +56,7 @@ const EditUserModal = ({id, visible, onCancel, onSubmit}) => {
       title="Edit User"
       visible={visible}
       onCancel={onCancel}
-      footer={[
-        <Button form={`edit-user-${id}`} type="primary" htmlType="submit">
-          Update
-        </Button>
-      ]}
+      footer={[]}
     >
       <Card>
         <UserForm onFinish={onFinish} isProfile={false} userData={userData} form={form}/>
