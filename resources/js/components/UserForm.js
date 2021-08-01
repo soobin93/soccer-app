@@ -51,7 +51,6 @@ const UserForm = (props) => {
   };
 
   useEffect(() => {
-
     if (props.userData) {
       props.form.setFieldsValue({
         email: props.userData.email,
@@ -62,7 +61,7 @@ const UserForm = (props) => {
       });
     }
 
-  }, []);
+  }, [props.userData]);
 
   return (
     <Form

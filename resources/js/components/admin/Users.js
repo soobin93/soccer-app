@@ -124,7 +124,7 @@ function AdminUsers() {
               bordered
               dataSource={userData}
               renderItem={user => (
-                <UserItem onClick={() => showEditUserModal(user.id)}>
+                <UserItem key={`user-item-${user.id}`} onClick={() => showEditUserModal(user.id)}>
                   <Row>
                     <UserDetails xs={{span: 24, order: 2}} md={{span: 18, order: 1}}>
                       {user.name}
