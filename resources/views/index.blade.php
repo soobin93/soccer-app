@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Soccer App!</title>
+        <title>Soccer App</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -20,12 +20,8 @@
     </head>
 
     <body>
-        <div id="login-test"></div>
-        <div id="register-test"></div>
-        <div id="user-list-test"></div>
-        <div id="admin_table" style="padding: 24px"></div>
-        
+        <div id="app"></div>
     </body>
-    <script>var mountNode = document.getElementById('admin_table');</script>
+
     <script src="{{ asset('js/app.js') }}" defer></script>
 </html>

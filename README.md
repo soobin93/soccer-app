@@ -1,13 +1,14 @@
 # Soccer App
 
 ## Road Map
-- [ ] User Authentication
+- [x] User Authentication
 - [ ] User Manager
-- [ ] Attend / Not Attend Vote Page
-- [ ] Captain Picker
-- [ ] Match Generator
+- [ ] Match Manager
+- [ ] Attend / Not Attend Vote Page for users
 - [ ] Team Member Pick Page
-- [ ] First Launching
+- [ ] Team chat
+- [ ] Team Strategy / Position Page
+- [ ] First Launch (Going Live)
 
 ## Installation
 1. Install plugins (Both back-end and front-end)
@@ -24,11 +25,16 @@ composer install && npm install
 php artisan key:generate
 ```
 
-5. Compile Javascript files
+5. Create a symlink for Storage
+```
+php artisan storage:link
+```
+
+6. Compile Javascript files
 `npm run dev` or
 `npm run watch` or
 `npm run production`
 
-6. Migrate DB
+7. Migrate DB
 `php artisan migrate` or
 `php artisan migrate:fresh`

@@ -1,16 +1,16 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {NavLink, useHistory} from "react-router-dom"
+import {NavLink} from "react-router-dom"
 import {useUser} from "components/contexts/UserContext";
+import UserApi from "api/UserApi";
 
 const Container = styled.div`
-  margin: 0;
+  margin-bottom: 20px;
   padding: 0;
   box-sizing: border-box;
   font-size: 15%;
   font-family: 'Roboto', sans-serif;
   border-bottom: 1px solid #E2E8F0;
-
 `;
 
 const Hamburger = styled.div`
@@ -26,7 +26,7 @@ const Hamburger = styled.div`
     border-radius: 5px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 860px) {
     display: flex;
   }
 `;
@@ -45,7 +45,7 @@ const NavMenu = styled.ul`
   align-items: center;
   position: relative;
 
-  @media (max-width: 768px) {
+  @media (max-width: 860px) {
     padding-left: 0;
     overflow: hidden;
     flex-direction: column;
@@ -53,7 +53,17 @@ const NavMenu = styled.ul`
     max-height: ${({isOpen}) => (isOpen ? "300px" : "0")};
     transition: max-height 0.3s ease-in;
   }
+`;
 
+const MenuItem = styled.li`
+  margin-top: 0.5rem;
+  margin-left: 5rem;
+  list-style: none;
+
+  @media (max-width: 860px) {
+    margin: 1rem 0;
+    text-align: center;
+  }
 `;
 
 const MenuLink = styled(NavLink)`
@@ -66,26 +76,17 @@ const MenuLink = styled(NavLink)`
   font-size: 1.2rem;
   font-weight: 300;
 
-  &:hover {
+  &:hover, &:focus {
     color: #482ff7;
   }
-
 `;
 
-const MenuItem = styled.li`
-  margin-top: 0.5rem;
-  margin-left: 5rem;
-  list-style: none;
+const LogInLink = styled(MenuLink)`
+  color: #2f54eb;
+`;
 
-  @media (max-width: 768px) {
-    margin: 1rem 0;
-    text-align: center;
-
-    &:nth-child(4) ${MenuLink} {
-      color: red;
-    }
-  }
-
+const LogOutLink = styled(MenuLink)`
+  color: red;
 `;
 
 const TitleLink = styled(NavLink)`
@@ -96,16 +97,17 @@ const TitleLink = styled(NavLink)`
   color: #482ff7;
 `;
 
-
 const NavBar = () => {
   const [user, setUser] = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
-  const LogUser = () => {
+  const logUser = () => {
     setIsOpen(!isOpen);
 
     if (user) {
-      setUser(null);
+      UserApi.logout().then(function (response) {
+        location.reload();
+      });
     }
   }
 
@@ -113,31 +115,38 @@ const NavBar = () => {
     <Container>
       <Nav>
         <TitleLink exact to="/">SoccerApp.</TitleLink>
+
         <Hamburger onClick={() => setIsOpen(!isOpen)}>
           <span/>
           <span/>
           <span/>
         </Hamburger>
+
         <NavMenu isOpen={isOpen}>
+          {user ? (
+            <MenuItem>
+              <MenuLink to="/profile" onClick={() => setIsOpen(!isOpen)}>Profile</MenuLink>
+            </MenuItem>
+          ) : null}
+
+
+          {user && user.admin === 1 ? (
+            <MenuItem>
+              <MenuLink to="/admin" onClick={() => setIsOpen(!isOpen)}>Admin</MenuLink>
+            </MenuItem>
+          ) : null}
+
           <MenuItem>
-            <MenuLink exact to="/" onClick={() => setIsOpen(!isOpen)}>Home</MenuLink>
-          </MenuItem>
-          <MenuItem>
-            <MenuLink to="/admin/user/add" onClick={() => setIsOpen(!isOpen)}>Add User</MenuLink>
-          </MenuItem>
-          <MenuItem>
-            <MenuLink to="/" onClick={() => setIsOpen(!isOpen)}>Dashboard</MenuLink>
-          </MenuItem>
-          <MenuItem>
-            <MenuLink to="/" onClick={LogUser}>{user != null ? "Log Out" : "Log In"}</MenuLink>
+            {
+              !user
+                ? <LogInLink to="/login" onClick={logUser}>Log In</LogInLink>
+                : <LogOutLink to="/login" onClick={logUser}>Log Out</LogOutLink>
+            }
           </MenuItem>
         </NavMenu>
-
       </Nav>
     </Container>
   )
 };
 
 export default NavBar;
-
-

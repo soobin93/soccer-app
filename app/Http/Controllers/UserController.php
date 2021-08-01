@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\{
-    Auth,
-    Hash
-};
+use Illuminate\Support\Facades\{Auth, Hash, Storage};
 
 use Illuminate\Http\{
     Request,
     Response
 };
 
+use Illuminate\Validation\Rule;
 use App\Models\User;
 
 class UserController extends Controller
@@ -55,18 +53,46 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'admin' => ['required', 'boolean'],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed']
+            'admin' => ['required', 'string', Rule::in(['true', 'false'])],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'avatar' => ['nullable', 'image']
         ]);
 
         $user->update([
             'name' => $request->name,
-            'password' => Hash::make($request->password),
-            'admin' => $request->admin
+            'admin' => ($request->admin === 'true')
         ]);
 
+        if ($request->password) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
+
+        if ($request->hasFile('avatar')) {
+
+            // Delete existing file
+            if ($user->avatar) {
+                Storage::delete('/public/avatars/' . $user->avatar);
+            }
+
+            $avatar = $request->file('avatar');
+            $filename = $user->id . '.' . $avatar->getClientOriginalExtension();
+
+            $request->file('avatar')->storeAs(
+                'public/avatars', $filename
+            );
+
+            $user->update([
+                'avatar' => $filename
+            ]);
+
+            $user = Auth::user();
+        }
+
         return response()->json([
-            'message' => 'The user has been updated successfully!'
+            'message' => 'The user has been updated successfully!',
+            'user' => $user
         ], Response::HTTP_OK);
     }
 

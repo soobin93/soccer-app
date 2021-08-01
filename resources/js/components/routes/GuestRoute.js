@@ -8,10 +8,10 @@ const UserRoute = ({component: Component, ...rest}) => {
   return (
     <Route {...rest} render={
       props => {
-        if (!user) {
+        if (user) {
           return <Redirect to={
             {
-              pathname: '/login',
+              pathname: '/',
               state: {
                 from: props.location
               }

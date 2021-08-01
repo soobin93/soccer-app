@@ -1,36 +1,52 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import LoginPage from 'routes/login';
 
-import AdminRoute from 'components/routes/AdminRoute';
-import UserRoute from 'components/routes/UserRoute';
-
-import AdminUser from 'routes/admin/user';
-import AdminUserAdd from 'routes/admin/user/add';
-import AdminUserView from 'routes/admin/user/view';
-
-import Unauthorized from 'routes/error/unauthorized';
-
+import AdminRoute from "components/routes/AdminRoute";
+import GuestRoute from "components/routes/GuestRoute";
+import UserRoute from "components/routes/UserRoute";
 import NavBar from "components/NavBar";
+import LandingPage from "components/LandingPage";
+
+import UserApi from "api/UserApi";
+
+import Admin from "pages/admin";
+import LoginPage from "pages/login";
+import ProfilePage from "pages/profile";
+import Unauthorized from "pages/error/unauthorized";
+import NotFound from "pages/error/not-found";
 
 export default () => {
-
   return (
     <Router>
       <NavBar/>
       <Switch>
-        <Route path="/" exact component={LoginPage}/>
+        <GuestRoute path="/login" exact component={LoginPage}/>
+
+        {/* Member Pages */}
+        <UserRoute path="/" exact component={LandingPage} />
+        <UserRoute path="/profile" exact component={ProfilePage} />
+
+        {/* Admin Pages */}
+        <UserRoute path="/admin" exact component={Admin}/>
 
         {/* Error Pages */}
         <Route path="/error/unauthorized" exact component={Unauthorized}/>
-
-        {/* Member Pages */}
-
-        {/* Admin Pages */}
-        <Route path="/admin/user" exact component={AdminUser}/>
-        <Route path="/admin/user/add" exact component={AdminUserAdd}/>
-        <Route path="/admin/user/:id" exact component={AdminUserView}/>
+        <Route component={NotFound}/>
       </Switch>
     </Router>
   )
+}
+
+export function beforeRender() {
+
+  const currentPath = window.location.pathname;
+  const localStorageUser = localStorage.getItem('user');
+
+  const excludedPageList = [
+    '/profile'
+  ];
+
+  if (!excludedPageList.includes(currentPath) && localStorageUser) {
+    UserApi.getCurrentUser();
+  }
 }
