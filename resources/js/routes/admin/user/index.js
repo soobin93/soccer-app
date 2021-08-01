@@ -29,15 +29,14 @@ function AdminUser() {
           key: 'control',
           render: (text, row, index) => (
             <Space>
-              <Button size="small">
-                <DeleteOutlined/>
-              </Button>
-
               <Link to={`/admin/user/${row.key}`}>
                 <Button size="small">
                   <EditOutlined/>
                 </Button>
               </Link>
+              <Button size="small" style={{ background: "red", borderColor: "yellow" }}>
+                <DeleteOutlined/>
+              </Button>
             </Space>
           ),
         },
