@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Card, List, Tag, Row, Col, Input, Button, Modal} from 'antd';
+import {Card, List, Tag, Row, Col, Input, Button, Modal, Pagination} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import styled from "styled-components";
 import UserApi from 'api/UserApi';
 import AddUserModal from "components/admin/AddUserModal";
 import EditUserModal from "components/admin/EditUserModal";
+import { values } from 'lodash';
 
 // Styles
 const Container = styled.div``;
@@ -57,8 +58,10 @@ const UserTypeTag = styled(Tag)`
 `;
 
 // Component
+
 function AdminUsers() {
   const [userData, setUserData] = useState([]);
+  const [filterInput, setFilterInput] = React.useState('')
   const [editUserId, setEditUserId] = useState(null);
   const [addUserModalIsVisible, setAddUserModalIsVisible] = useState(false);
   const [editUserModalIsVisible, setEditUserModalIsVisible] = useState(false);
@@ -91,6 +94,15 @@ function AdminUsers() {
     });
   };
 
+  const filterData = () => {
+    if(filterInput === '') {
+      return userData
+    }else {
+      return userData.filter(({ name }) => name.includes(userData)) 
+    }
+    
+  };
+
   // When the page is loaded
   useEffect(() => {
     loadUsers();
@@ -109,7 +121,7 @@ function AdminUsers() {
                 <Search
                   placeholder="type search text"
                   allowClear
-                  // onSearch={onSearch}
+                  onSearch={setFilterInput}
                 />
               </ToolbarLeft>
 
@@ -122,7 +134,13 @@ function AdminUsers() {
 
             <List
               bordered
-              dataSource={userData}
+              pagination={{
+                defaultPageSize: 5,
+                pageSizeOptions: ["5", "10", "20", "25", "30"],
+                showSizeChanger: true,
+                locale: { items_per_page: "" },
+              }}
+              dataSource={filterData()}
               renderItem={user => (
                 <UserItem key={`user-item-${user.id}`} onClick={() => showEditUserModal(user.id)}>
                   <Row>
