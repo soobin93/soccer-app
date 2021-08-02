@@ -134,7 +134,7 @@ const UserForm = (props) => {
 
       <Form.Item {...tailFormItemLayout}>
         <StyledButton type="primary" htmlType="submit">
-          Update
+          Submit
         </StyledButton>
       </Form.Item>
     </Form>

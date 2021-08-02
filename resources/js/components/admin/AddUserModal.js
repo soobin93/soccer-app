@@ -38,11 +38,7 @@ const AddUserModal = ({ visible, onCancel, onSubmit }) => {
       title="New User"
       visible={visible}
       onCancel={onCancel}
-      footer={[
-        <Button form="add-user" type="primary" htmlType="submit">
-          Submit
-        </Button>
-      ]}
+      footer={[]}
     >
       <Card>
         <UserForm onFinish={onFinish} isProfile={false} form={form}/>
