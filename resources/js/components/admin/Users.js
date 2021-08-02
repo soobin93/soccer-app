@@ -61,7 +61,6 @@ const UserTypeTag = styled(Tag)`
 
 function AdminUsers() {
   const [userData, setUserData] = useState([]);
-  const [filterInput, setFilterInput] = React.useState('')
   const [editUserId, setEditUserId] = useState(null);
   const [addUserModalIsVisible, setAddUserModalIsVisible] = useState(false);
   const [editUserModalIsVisible, setEditUserModalIsVisible] = useState(false);
@@ -94,15 +93,6 @@ function AdminUsers() {
     });
   };
 
-  const filterData = () => {
-    if(filterInput === '') {
-      return userData
-    }else {
-      return userData.filter(({ name }) => name.includes(userData)) 
-    }
-    
-  };
-
   // When the page is loaded
   useEffect(() => {
     loadUsers();
@@ -121,7 +111,7 @@ function AdminUsers() {
                 <Search
                   placeholder="type search text"
                   allowClear
-                  onSearch={setFilterInput}
+                  //onSearch={setFilterInput}
                 />
               </ToolbarLeft>
 
@@ -140,7 +130,7 @@ function AdminUsers() {
                 showSizeChanger: true,
                 locale: { items_per_page: "" },
               }}
-              dataSource={filterData()}
+              dataSource={userData}
               renderItem={user => (
                 <UserItem key={`user-item-${user.id}`} onClick={() => showEditUserModal(user.id)}>
                   <Row>
