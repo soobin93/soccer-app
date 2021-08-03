@@ -20,7 +20,9 @@ const ToolbarLeft = styled(Col)``;
 const ToolbarRight = styled(Col)``;
 
 const Search = styled(Input.Search)`
-  width: 200px;
+  @media (max-width: 768px) {
+    width: 200px;
+  }
 `;
 
 const UserItem = styled(List.Item)`
@@ -57,6 +59,7 @@ const UserTypeTag = styled(Tag)`
 
 // Component
 function AdminUsers() {
+  const [allUserData, setAllUserData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [editUserId, setEditUserId] = useState(null);
   const [addUserModalIsVisible, setAddUserModalIsVisible] = useState(false);
@@ -83,12 +86,26 @@ function AdminUsers() {
     UserApi.getUsers().then(function (response) {
       if (response.data.hasOwnProperty('users')) {
         const users = response.data.users;
+        setAllUserData(users);
         setUserData(users);
       }
     }).catch(function (error) {
       // @TODO: Print error message here
     });
   };
+
+  const search = (input) => {
+    if (input) {
+      const filteredUserData = userData.filter(function(user) {
+        return user.name.toLowerCase().includes(input.toLowerCase()) ||
+          user.email.toLowerCase().includes(input.toLowerCase());
+      });
+
+      setUserData(filteredUserData);
+    } else {
+      setUserData(allUserData);
+    }
+  }
 
   // When the page is loaded
   useEffect(() => {
@@ -108,6 +125,8 @@ function AdminUsers() {
                 <Search
                   placeholder="type search text"
                   allowClear
+                  onSearch={search}
+                  enterButton
                 />
               </ToolbarLeft>
 
