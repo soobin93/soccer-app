@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\{Auth, Hash, Storage};
+use Illuminate\Support\Facades\{
+    Auth,
+    Hash,
+    Storage
+};
 
 use Illuminate\Http\{
     Request,

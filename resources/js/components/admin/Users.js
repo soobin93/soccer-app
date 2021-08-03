@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Card, List, Tag, Row, Col, Input, Button, Modal} from 'antd';
+import {Card, List, Tag, Row, Col, Input, Button} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
-import {Link} from 'react-router-dom';
 import styled from "styled-components";
 
 import UserApi from 'api/UserApi';
@@ -109,7 +108,6 @@ function AdminUsers() {
                 <Search
                   placeholder="type search text"
                   allowClear
-                  // onSearch={onSearch}
                 />
               </ToolbarLeft>
 
@@ -122,6 +120,11 @@ function AdminUsers() {
 
             <List
               bordered
+              pagination={{
+                defaultPageSize: 10,
+                pageSizeOptions: ["10", "20", "25", "30"],
+                showSizeChanger: true
+              }}
               dataSource={userData}
               renderItem={user => (
                 <UserItem key={`user-item-${user.id}`} onClick={() => showEditUserModal(user.id)}>
