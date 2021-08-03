@@ -1,6 +1,6 @@
 import React from "react";
 import {useUser} from "components/contexts/UserContext";
-import {Avatar, Card, Row} from "antd";
+import {Avatar, Card} from "antd";
 import Meta from "antd/es/card/Meta";
 import {AntDesignOutlined, UserOutlined} from "@ant-design/icons";
 import styled from "styled-components";
@@ -45,7 +45,7 @@ const LandingPage = () => {
             <StyledAvatar
               icon={<AntDesignOutlined />}
               size={{ xs: 120, sm: 130, md: 140, lg: 150, xl: 160, xxl: 170 }}
-              src={`/storage/avatars/${user.avatar}`}
+              src={`/storage/avatars/${user.avatar}?v=` + user.avatar_version}
             />}
           title={
             <Title>{user.name}</Title>

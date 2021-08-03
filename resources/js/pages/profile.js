@@ -12,7 +12,13 @@ const UserProfileView = () => {
 
   const onFinish = (data) => {
     UserApi.updateUser(user.id, data).then(function (response) {
+      // Display success message
       message.success(response.data.message);
+
+      // Increase avatar version to avoid cache issue
+      response.data.user['avatar_version'] = user.avatar_version + 1;
+
+      // Update user context and redirect
       setUser(response.data.user);
       history.push('/');
     }).catch(function (error) {

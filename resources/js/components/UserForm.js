@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
-import {Row, Col, Button, Form, Input, Select} from "antd";
+import {Button, Form, Input, Select} from "antd";
 import AvatarInput from "components/AvatarInput";
 
 const {Option} = Select;
@@ -39,7 +39,10 @@ const UserForm = (props) => {
       onFinish={onFinish}
     >
       {props.isProfile ? (
-        <AvatarInput onUpdate={setAvatar} initialValue={props.userData.avatar ?? null} />
+        <AvatarInput
+          onUpdate={setAvatar}
+          initialValue={`${props.userData.avatar}?v=${props.userData.avatar_version}` ?? null}
+        />
       ) : null}
 
       <Form.Item
