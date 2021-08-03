@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Card, List, Tag, Row, Col, Input, Button, Modal, Pagination} from 'antd';
+import {Card, List, Tag, Row, Col, Input, Button} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
-import {Link} from 'react-router-dom';
 import styled from "styled-components";
 
 import UserApi from 'api/UserApi';
 import AddUserModal from "components/admin/AddUserModal";
 import EditUserModal from "components/admin/EditUserModal";
-import { values } from 'lodash';
 
 // Styles
 const Container = styled.div``;
@@ -58,7 +56,6 @@ const UserTypeTag = styled(Tag)`
 `;
 
 // Component
-
 function AdminUsers() {
   const [userData, setUserData] = useState([]);
   const [editUserId, setEditUserId] = useState(null);
@@ -111,7 +108,6 @@ function AdminUsers() {
                 <Search
                   placeholder="type search text"
                   allowClear
-                  //onSearch={setFilterInput}
                 />
               </ToolbarLeft>
 
@@ -125,10 +121,9 @@ function AdminUsers() {
             <List
               bordered
               pagination={{
-                defaultPageSize: 5,
-                pageSizeOptions: ["5", "10", "20", "25", "30"],
-                showSizeChanger: true,
-                locale: { items_per_page: "" },
+                defaultPageSize: 10,
+                pageSizeOptions: ["10", "20", "25", "30"],
+                showSizeChanger: true
               }}
               dataSource={userData}
               renderItem={user => (
