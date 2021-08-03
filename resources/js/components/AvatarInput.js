@@ -1,8 +1,13 @@
 import React, {useState} from "react";
-import {Upload,message} from "antd";
+import {Upload, message} from "antd";
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
+import styled from "styled-components";
 
-const AvatarInput = ({ onUpdate }) => {
+const AvatarUpload = styled(Upload)`
+  text-align: center;
+`;
+
+const AvatarInput = ({onUpdate}) => {
 
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
@@ -14,7 +19,7 @@ const AvatarInput = ({ onUpdate }) => {
     </div>
   );
 
-  function handleUpload({ file }) {
+  function handleUpload({file}) {
     if (validateImage(file)) {
       showPreview(file);
       onUpdate(file);
@@ -47,7 +52,7 @@ const AvatarInput = ({ onUpdate }) => {
   }
 
   return (
-    <Upload
+    <AvatarUpload
       name="avatar"
       listType="picture-card"
       showUploadList={false}
@@ -57,7 +62,7 @@ const AvatarInput = ({ onUpdate }) => {
       {preview
         ? <img src={preview} alt="avatar" style={{width: '100%'}}/>
         : uploadButton}
-    </Upload>
+    </AvatarUpload>
   );
 }
 
