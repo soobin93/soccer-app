@@ -12,7 +12,7 @@
 
 ## Installation
 1. Install plugins (Both back-end and front-end)
-```
+```bash
 composer install && npm install
 ```
 
@@ -21,12 +21,12 @@ composer install && npm install
 3. Fill out `.env` file (Local domain, DB configuration)
    
 4. Generate key
-```
+```bash
 php artisan key:generate
 ```
 
 5. Create a symlink for Storage
-```
+```bash
 php artisan storage:link
 ```
 
@@ -38,3 +38,9 @@ php artisan storage:link
 7. Migrate DB
 `php artisan migrate` or
 `php artisan migrate:fresh`
+
+## Useful Commands
+- Creating dummy data for user (following command will create 5 dummy data for user, number can be changed)
+```bash
+php artisan factory:user 5
+```
