@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
-import {Button, Form, Input, Select} from "antd";
+import {Row, Col, Button, Form, Input, Select} from "antd";
 import AvatarInput from "components/AvatarInput";
 
 const {Option} = Select;
@@ -9,40 +9,7 @@ const StyledButton = styled(Button)`
   width: 100%;
 `
 
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
-
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
-  },
-};
-
 const UserForm = (props) => {
-
   const [avatar, setAvatar] = useState(null);
 
   const onFinish = (data) => {
@@ -56,6 +23,7 @@ const UserForm = (props) => {
         email: props.userData.email,
         name: props.userData.name,
         admin: !!props.userData.admin,
+        avatar: props.userData.avatar,
         password: null,
         password_confirmation: null
       });
@@ -65,19 +33,18 @@ const UserForm = (props) => {
 
   return (
     <Form
-      {...formItemLayout}
       form={props.form}
       name="update"
+      layout="vertical"
       onFinish={onFinish}
     >
       {props.isProfile ? (
-        <AvatarInput onUpdate={setAvatar} />
+        <AvatarInput onUpdate={setAvatar} initialValue={props.userData.avatar ?? null} />
       ) : null}
 
       <Form.Item
         name="email"
         label="Email"
-        initialValue={props.userData ? props.userData.email : ""}
       >
         {props.userData ? (
           <Input disabled/>
@@ -96,7 +63,6 @@ const UserForm = (props) => {
             whitespace: true,
           },
         ]}
-        initialValue={props.userData ? props.userData.name : ""}
       >
         <Input/>
       </Form.Item>
@@ -132,13 +98,13 @@ const UserForm = (props) => {
         <Input.Password/>
       </Form.Item>
 
-      <Form.Item {...tailFormItemLayout}>
+      <Form.Item>
         <StyledButton type="primary" htmlType="submit">
           Submit
         </StyledButton>
       </Form.Item>
     </Form>
-  )
+  );
 }
 
 export default UserForm;

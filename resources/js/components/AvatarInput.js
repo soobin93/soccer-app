@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Upload, message} from "antd";
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import styled from "styled-components";
@@ -7,7 +7,7 @@ const AvatarUpload = styled(Upload)`
   text-align: center;
 `;
 
-const AvatarInput = ({onUpdate}) => {
+const AvatarInput = ({onUpdate, initialValue}) => {
 
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
@@ -50,6 +50,12 @@ const AvatarInput = ({onUpdate}) => {
 
     reader.readAsDataURL(img);
   }
+
+  useEffect(() => {
+    if (initialValue) {
+      setPreview(`/storage/avatars/${initialValue}`);
+    }
+  }, []);
 
   return (
     <AvatarUpload

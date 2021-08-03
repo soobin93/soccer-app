@@ -41,7 +41,7 @@ const UserProfileView = () => {
 
   return (
     <Row type="flex" justify="center">
-      <Col span={20}>
+      <Col xs={{span: 20}} sm={{span: 18}} md={{span: 16}} lg={{span: 14}} xl={{span: 10}} xxl={{span: 8}}>
         <Card title="Profile">
           <UserForm onFinish={onFinish} isProfile={true} userData={user} form={form}/>
         </Card>
