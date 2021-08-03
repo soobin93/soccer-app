@@ -122,7 +122,7 @@ function AdminUsers() {
               bordered
               pagination={{
                 defaultPageSize: 10,
-                pageSizeOptions: ["10", "20", "25", "30"],
+                pageSizeOptions: ["5", "10", "20", "25", "30"],
                 showSizeChanger: true
               }}
               dataSource={userData}
