@@ -1,10 +1,11 @@
 import React from "react";
 import {useUser} from "components/contexts/UserContext";
-import {Avatar, Card} from "antd";
+import {Avatar, Card, Col, Row} from "antd";
 import Meta from "antd/es/card/Meta";
 import {AntDesignOutlined, UserOutlined} from "@ant-design/icons";
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+
 
 const CardContainer = styled.div`
   justify-content: center;
@@ -21,7 +22,7 @@ const StyledUserOutlined = styled(UserOutlined)`
 `
 
 const Title = styled.div`
-  font-size: larger;
+  font-size: 130%;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
 `
@@ -35,31 +36,41 @@ const LandingPage = () => {
   const [user] = useUser();
 
   return (
-    <CardContainer>
-      <Card
-        style={{width: '90%', borderWidth:'2px', borderRadius:'10px'}}
-        bodyStyle={{padding: '15px'}}
-      >
-        <Meta
-          avatar={
-            <StyledAvatar
-              icon={<AntDesignOutlined />}
-              size={{ xs: 120, sm: 130, md: 140, lg: 150, xl: 160, xxl: 170 }}
-              src={`/storage/avatars/${user.avatar}?v=` + user.avatar_version}
-            />}
-          title={
-            <Title>{user.name}</Title>
-          }
-          description={
-            <>
-            <StyledUserOutlined/>
-            <StyledLink to='/profile'>Profile</StyledLink>
-            </>
-          }
-        />
-      </Card>
-    </CardContainer>
-
+    <Row type="flex" justify="center">
+      <Col
+        xs={{span: 24}}
+        sm={{span:18}}
+        md={{span: 12, offset: 12}}
+        lg={{span:10,offset: 14}}
+        xl={{span:8, offset: 16}}
+        xxl={{span:6, offset: 18}}>
+        <CardContainer>
+          <Card
+            style={{ width:'90%', borderWidth:'2px', borderRadius:'10px'}}
+            bodyStyle={{padding: '3%'}}
+          >
+            <Meta
+              avatar={
+                <StyledAvatar
+                  icon={<AntDesignOutlined />}
+                  size={100}
+                  src={`/storage/avatars/${user.avatar}?v=` + user.avatar_version}
+                />}
+              title={
+                <Title>{user.name}</Title>
+              }
+              description={
+                <>
+                  <StyledUserOutlined/>
+                  <StyledLink to='/profile'>Profile</StyledLink>
+                </>
+              }
+            />
+          </Card>
+        </CardContainer>
+      </Col>
+    </Row>
+    
   );
 }
 

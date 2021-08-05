@@ -58,7 +58,13 @@ const LoginPage = () => {
 
   return (
     <Container>
-      <Col span={22}>
+      <Col
+        xs={{span: 24}}
+        sm={{span:16}}
+        md={{span: 12}}
+        lg={{span:10}}
+        xl={{span:8}}
+        xxl={{span:6}}>
         <LogInCard>
           <Form
             form={form}
